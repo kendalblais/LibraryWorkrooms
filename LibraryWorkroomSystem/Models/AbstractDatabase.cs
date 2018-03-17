@@ -1,7 +1,7 @@
 ﻿using LinkShortener.Models.Debugging;
 
 using MySql.Data.MySqlClient;
-
+using System.Collections.Generic;
 using System;
 using System.Threading;
 
@@ -22,6 +22,7 @@ namespace LinkShortener.Models.Database
             mutex = new Mutex(false);
             connection = new MySqlConnection("SERVER=localhost;DATABASE=mysql;UID=" + UID + ";AUTO ENLIST=false;PASSWORD=" + Password);
             createDB();
+            addForeignKeys();
         }
 
         /// <summary>
@@ -200,6 +201,52 @@ namespace LinkShortener.Models.Database
                 mutex.ReleaseMutex();
                 Debug.consoleMsg("Could not close connection to database. Error message: " + e.Number + e.Message);
                 return false;
+            }
+        }
+
+        private void addForeignKeys()
+        {
+            List<string> modifications = new List<string>();
+            modifications.Add("ALTER TABLE libraryworkroom.book " +
+                "ADD CONSTRAINT FK_renter FOREIGN KEY(renter_username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "ADD CONSTRAINT FK_floorB FOREIGN KEY(belonging_floor) REFERENCES libraryworkroom.floor(floor_no) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "ADD CONSTRAINT FK_bookkeeper FOREIGN KEY(bookkeeper_ID) REFERENCES libraryworkroom.employee(employee_ID) ON DELETE CASCADE ON UPDATE CASCADE;");
+
+            modifications.Add("ALTER TABLE libraryworkroom.user " +
+                "ADD CONSTRAINT FK_admin FOREIGN KEY(admin_ID) REFERENCES libraryworkroom.employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE;");
+
+            modifications.Add("ALTER TABLE libraryworkroom.employee " +
+                "ADD CONSTRAINT FK_user FOREIGN KEY(emp_username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE;");
+
+            modifications.Add("ALTER TABLE libraryworkroom.users_in_programs " +
+                "ADD CONSTRAINT FK_prog FOREIGN KEY(program_name) REFERENCES libraryworkroom.program(name) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "ADD CONSTRAINT FK_userP FOREIGN KEY(username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE;");
+
+            modifications.Add("ALTER TABLE libraryworkroom.workroom " +
+                "ADD CONSTRAINT FK_floorW FOREIGN KEY(belonging_floor) REFERENCES libraryworkroom.floor(floor_no) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "ADD CONSTRAINT FK_reserver FOREIGN KEY(reserver_username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "ADD CONSTRAINT FK_adminW FOREIGN KEY(admin_ID) REFERENCES libraryworkroom.employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE;");
+
+            modifications.Add("ALTER TABLE libraryworkroom.program " +
+                "ADD CONSTRAINT FK_teacher FOREIGN KEY(teacher_ID) REFERENCES libraryworkroom.employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE;");
+
+            try
+            {
+                foreach (string constraint in modifications)
+                {
+                    if (openConnection())
+                    {
+                        MySqlCommand command = new MySqlCommand(constraint, connection);
+                        command.ExecuteNonQuery();
+
+                        closeConnection();
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Debug.consoleMsg("Unable to create foreign key references "
+                      + e.Number + e.Message);
             }
         }
     }

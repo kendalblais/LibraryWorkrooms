@@ -12,7 +12,7 @@ namespace LibraryWorkroomSystem.Controllers
         public ActionResult Index()
         {
             //this is just to test the database creation
-            LinkDatabase db = LinkDatabase.getInstance();
+            LibraryDatabase db = LibraryDatabase.getInstance();
             return View();
         }
 

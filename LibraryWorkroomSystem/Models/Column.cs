@@ -24,6 +24,7 @@ namespace LinkShortener.Models.Database
             this.type = type;
             this.primaryKey = primaryKey;
             this.mods = mods;
+            
         }
 
         /// <summary>
@@ -70,5 +71,7 @@ namespace LinkShortener.Models.Database
         /// Represents whether or not this column is a primary key.
         /// </summary>
         public bool primaryKey { get; }
+
+       
     }
 }

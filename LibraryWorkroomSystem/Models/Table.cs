@@ -38,6 +38,8 @@ namespace LinkShortener.Models.Database
                 {
                     primaryKeys.Add(column.name);
                 }
+
+              
             }
             if (primaryKeys.Count == 0)
             {
@@ -53,6 +55,8 @@ namespace LinkShortener.Models.Database
                 }
                 query += primaryKeys[i] + ")";
             }
+
+            
             query += ");";
             return query;
         }

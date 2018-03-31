@@ -1,11 +1,11 @@
-﻿using LinkShortener.Models.Debugging;
+﻿using LibraryWorkroomSystem.Models.Debugging;
 
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System;
 using System.Threading;
 
-namespace LinkShortener.Models.Database
+namespace LibraryWorkroomSystem.Models.Database
 {
     /// <summary>
     /// This class is used as a base class for the creation and deletion of a database.

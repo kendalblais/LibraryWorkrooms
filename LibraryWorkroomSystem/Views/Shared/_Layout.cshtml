@@ -8,7 +8,9 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+  
+    <div class="navbar navbar-inverse navbar-fixed-top" style=@LibraryWorkroomSystem.Models.Database.Sessions.setColour()>
+    
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,7 +25,18 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About Us", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    @if (LibraryWorkroomSystem.Models.Database.Sessions.isLoggedIn() == true)
+                    {
+                        <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                        <li>@Html.ActionLink("Workrooms", "Index", "Workrooms")</li>
+                        <li>@Html.ActionLink("Programs", "Index", "Programs")</li>
+                        <li>@Html.ActionLink(LibraryWorkroomSystem.Models.Database.Sessions.getUser(), "MyAccount", "Home")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                    }
+                    @if (LibraryWorkroomSystem.Models.Database.Sessions.isLoggedIn() == false)
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    }
                 </ul>
             </div>
         </div>

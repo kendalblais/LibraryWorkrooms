@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LinkShortener.Models.Debugging
+namespace LibraryWorkroomSystem.Models.Debugging
 {
     public static class Debug
     {

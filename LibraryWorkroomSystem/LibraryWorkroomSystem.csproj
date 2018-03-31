@@ -143,15 +143,23 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProgramsController.cs" />
+    <Compile Include="Controllers\WorkroomsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AbstractDatabase.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\BooksDB.cs" />
     <Compile Include="Models\Column.cs" />
     <Compile Include="Models\Debug.cs" />
     <Compile Include="Models\LibraryDatabase.cs" />
+    <Compile Include="Models\ProgramsDB.cs" />
+    <Compile Include="Models\Sessions.cs" />
     <Compile Include="Models\Table.cs" />
+    <Compile Include="Models\WorkroomsDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +169,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\AccountCreation\AccountCreation.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -192,6 +201,11 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\CreateAccount.cshtml" />
+    <Content Include="Views\Home\MyAccount.cshtml" />
+    <Content Include="Views\Workrooms\Index.cshtml" />
+    <Content Include="Views\Programs\Index.cshtml" />
+    <Content Include="Views\Books\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,39 @@
+﻿
+
+
+
+<script type="text/javascript" src="~/Scripts/AccountCreation/AccountCreation.js"></script>
+@using LibraryWorkroomSystem.Models.Database
+<h2>Create Account</h2>
+
+<div class="container">
+    @using (Html.BeginForm("CreateAccountRequest", "Home", FormMethod.Post,
+        new { id = "accountData", onsubmit = "checkAccountData()" }))
+    {
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td> @Html.TextBox("name") </td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td> @Html.TextBox("username") </td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td> @Html.TextBox("password") </td>
+            </tr>
+            <tr>
+                <td>Confirm Password:</td>
+                <td> @Html.TextBox("confirmPassword") </td>
+            </tr>
+            <tr>
+                <td>Account Type:</td>
+                <td>@Html.DropDownList("accountType", new SelectList(Enum.GetValues(typeof(AccountType))), "Select Type")</td>
+        </table>
+
+        <button type="submit" class="btn btn-default">Create Account</button><br>
+        <p>@ViewBag.Greeting</p>
+
+    }
+</div>

@@ -1,13 +1,22 @@
-﻿<div class="glyphicon-log-in">
-    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+﻿
+
+<h2>Login</h2>
+
+
+<div class="container">
+    
+    @using (Html.BeginForm("AttemptLogin", "Home"))
     {
         <p>Username:</p>
         <input type="text" name="Username"><br>
         <p>Password:</p>
         <input type="password" name="Password"><br>
         <button type="submit" class="btn btn-default">Login</button><br>
-        <p>@ViewBag.MyGreeting</p>
 
+    }
+    @using (Html.BeginForm("CreateAccount", "Home"))
+    {
+        <button type="submit" class="btn btn-default">Create Account</button>
     }
 
 

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace LinkShortener.Models.Database
+namespace LibraryWorkroomSystem.Models.Database
 {
     public partial class LibraryDatabase : AbstractDatabase
     {
@@ -23,6 +23,208 @@ namespace LinkShortener.Models.Database
             return instance;
         }
 
+        public Account getAccountData()
+        {
+            Account acct = new Account();
+            string user = Sessions.getUser();
+            acct.accType = getAccountType(user);
+            acct.usrname = user;
+            acct.cardNo = null;
+
+            string query = @"SELECT * FROM " + dbname + @".user " +
+                @"WHERE username='" + user + @"';";
+
+            if (openConnection() == true)
+            {
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    dataReader.Read();
+                    acct.actualName = dataReader.GetString("name");
+
+                    dataReader.Close();
+
+
+                }
+                catch (Exception e)
+                {
+                    
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+            else
+            {
+                
+
+            }
+            return acct;
+        }
+
+        public AccountType getAccountType(string username) {
+            string query = @"SELECT * FROM " + dbname + @".employee " +
+                @"WHERE emp_username='" + username + @"';";
+
+
+
+            bool result = false;
+            string position = "";
+
+            if (openConnection() == true)
+            {
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    result = dataReader.Read();
+                    position = dataReader.GetString("position");
+               
+                    dataReader.Close();
+
+                  
+                }
+                catch (Exception e)
+                {
+                    result = false;
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+            else
+            {
+                result = false;
+
+            }
+            if (!result)
+                return AccountType.user;
+            else {
+                if (position == "admin")
+                    return AccountType.admin;
+                else
+                    return AccountType.employee;
+            }
+
+
+        }
+
+        public string addEmployee(string username, AccountType position) {
+
+            
+            string response = "";
+
+            string type;
+            if (position == AccountType.admin)
+                type = "admin";
+            else
+                type = "employee";
+
+
+            string query = @"INSERT INTO " + dbname + ".employee (emp_username,position) " +
+                "VALUES('" + username + "','" + type + "');";
+
+            if (openConnection() == true)
+            {
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.ExecuteNonQuery();
+
+                }
+                catch (MySqlException e)
+                {
+                    response = e.Message;
+                }
+                catch (Exception e)
+                {
+
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+            else
+            {
+                throw new Exception("Could not connect to database.");
+            }
+            
+            return response;
+        }
+
+        public bool attemptLogin(string username, string password)
+        {
+            string query = @"SELECT * FROM " + dbname + @".user " +
+                @"WHERE username='" + username + @"' " +
+                @"AND password='" + password + @"';";
+
+            bool result = false;
+            
+
+            if (openConnection() == true)
+            {
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    result = dataReader.Read();
+                    dataReader.Close();
+                }
+                catch (Exception e)
+                {
+                    result = false;
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+            else
+            {
+                result = false;
+                
+            }
+            return result;
+
+        }
+
+        public bool createNewAccount(string username, string password, string name)
+        {
+            string query = @"INSERT INTO " + dbname + ".user (username,name,password) " +
+                "VALUES('" + username + "','" + name + "','" + password + "');";
+            bool result = true;
+            if (openConnection() == true)
+            {
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.ExecuteNonQuery();
+                    
+                }
+                catch (MySqlException e)
+                {
+                    result = false;
+                }
+                catch (Exception e)
+                {
+   
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+            else
+            {
+                throw new Exception("Could not connect to database.");
+            }
+
+            return result;
+        }
         /// <summary>
         /// Gets a long URL based on the id of the short url
         /// </summary>
@@ -96,6 +298,7 @@ namespace LinkShortener.Models.Database
 
     public partial class LibraryDatabase : AbstractDatabase
     {
+       
         private static LibraryDatabase instance = null;
 
         private const String dbname = "LibraryWorkroom";
@@ -126,7 +329,7 @@ namespace LinkShortener.Models.Database
                 new Column( "username", "VARCHAR(300)", new string[] { "NOT NULL", "UNIQUE" }, true),
                 new Column( "name", "VARCHAR(300)", new string[] { "NOT NULL" }, false),
                 new Column( "password", "VARCHAR(300)", new string[] { "NOT NULL" }, false),
-                new Column( "admin_ID", "INTEGER", new string[] { "NOT NULL" }, false)
+                new Column( "admin_ID", "INTEGER", null, false)
             }),
 
             // This represents the FLOOR table that keeps track of all the floors in the building
@@ -139,7 +342,7 @@ namespace LinkShortener.Models.Database
             // This represents the EMPLOYEE table that keeps track of all the employees in the system 
             new Table ( dbname, "employee", new Column[]
             {
-                new Column( "employee_ID", "INTEGER", new string[] { "NOT NULL", "UNIQUE"}, true),
+                new Column( "employee_ID", "INTEGER", new string[] { "NOT NULL", "UNIQUE", "AUTO_INCREMENT"}, true),
                 new Column( "emp_username", "VARCHAR(300)", new string[] { "NOT NULL", "UNIQUE" }, false),
                 new Column( "position", "VARCHAR(300)", new string[] { "NOT NULL" }, false)
             }),

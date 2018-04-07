@@ -355,10 +355,6 @@ namespace LibraryWorkroomSystem.Models.Database
                 new Column( "workroom_no", "INTEGER", new string[] { "NOT NULL" }, true),
                 new Column( "belonging_floor", "INTEGER", new string[] { "NOT NULL" }, true),
                 new Column( "room_size", "INTEGER", new string[] { "NOT NULL" }, false),
-                new Column( "booked_or_not", "BOOLEAN", new string[] { "NOT NULL" }, false),
-                new Column( "reserver_username", "VARCHAR(300)", null, false),
-                new Column( "reservation_length", "DATETIME", null, false),
-                new Column( "time_of_reservation", "DATETIME", null, false),
                 new Column( "admin_ID", "INTEGER", null, false)
             }),
 
@@ -377,6 +373,15 @@ namespace LibraryWorkroomSystem.Models.Database
             {
                 new Column( "program_name", "VARCHAR(300)", new string[] { "NOT NULL" }, true),
                 new Column( "username", "VARCHAR(300)", new string[] { "NOT NULL" }, true)
+            }),
+
+            new Table ( dbname, "workroomBookings", new Column[]
+            {
+                new Column( "floor_no", "INTEGER", new string[] { "NOT NULL" }, true),
+                new Column( "workroom_no", "INTEGER", new string[] { "NOT NULL" }, true),
+                new Column( "reserver_username", "VARCHAR(300)", null, false),
+                new Column( "time_of_reservation", "DATETIME", null, false)      //each reservation will be an hour length and only the start time is recorded          
+
             })
 
 

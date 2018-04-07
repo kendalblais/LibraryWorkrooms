@@ -47,7 +47,7 @@ namespace LibraryWorkroomSystem.Models.Database
 
         public static string getType()
         {
-            return (string)HttpContext.Current.Session["user"];
+            return (string)HttpContext.Current.Session["type"];
         }
 
         public static string getUser()

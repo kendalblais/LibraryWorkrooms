@@ -23,6 +23,8 @@ namespace LibraryWorkroomSystem.Models.Database
             return instance;
         }
 
+       
+
         public Account getAccountData()
         {
             Account acct = new Account();
@@ -319,8 +321,8 @@ namespace LibraryWorkroomSystem.Models.Database
                 new Column( "renter_username", "VARCHAR(300)", null, false),              // null means no mods to that attribute
                 new Column( "take_out_date", "DATE", null, false),
                 new Column( "return_date", "DATE", null, false),
-                new Column( "belonging_floor", "INTEGER", new string[] { "NOT NULL"}, false),
-                new Column( "bookkeeper_ID", "INTEGER", new string[] { "NOT NULL" }, false)
+                new Column( "belonging_floor", "INTEGER", null, false),
+                new Column( "bookkeeper_ID", "INTEGER", null, false)
             }),
         
             // This represents the USER table that keeps track of all the users in the system 
@@ -336,7 +338,7 @@ namespace LibraryWorkroomSystem.Models.Database
             new Table ( dbname, "floor", new Column[]
             {
                 new Column( "floor_no", "INTEGER", new string[] { "NOT NULL", "UNIQUE" }, true),
-                new Column( "number_of_workrooms", "INTEGER", new string[] { "NOT NULL" }, false)
+                new Column( "number_of_workrooms", "INTEGER", new string[] { "NOT NULL", "DEFAULT 0" }, false)
             }),
 
             // This represents the EMPLOYEE table that keeps track of all the employees in the system 
@@ -357,7 +359,7 @@ namespace LibraryWorkroomSystem.Models.Database
                 new Column( "reserver_username", "VARCHAR(300)", null, false),
                 new Column( "reservation_length", "DATETIME", null, false),
                 new Column( "time_of_reservation", "DATETIME", null, false),
-                new Column( "admin_ID", "INTEGER", new string[] { "NOT NULL" }, false)
+                new Column( "admin_ID", "INTEGER", null, false)
             }),
 
             // This represents the PROGRAM table that keeps track of all the different programs offered by the library

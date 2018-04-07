@@ -239,7 +239,7 @@ namespace LibraryWorkroomSystem.Models.Database
                         MySqlCommand command = new MySqlCommand(constraint, connection);
                         command.ExecuteNonQuery();
 
-                        closeConnection();
+                        
                     }
                 }
             }
@@ -247,6 +247,9 @@ namespace LibraryWorkroomSystem.Models.Database
             {
                 Debug.consoleMsg("Unable to create foreign key references "
                       + e.Number + e.Message);
+            }
+            finally {
+                closeConnection();
             }
         }
     }

@@ -30,8 +30,13 @@
                         <li>@Html.ActionLink("Books", "Index", "Books")</li>
                         <li>@Html.ActionLink("Workrooms", "Index", "Workrooms")</li>
                         <li>@Html.ActionLink("Programs", "Index", "Programs")</li>
+                        if (LibraryWorkroomSystem.Models.Database.Sessions.getType() == "admin")
+                        {
+                            <li>@Html.ActionLink("Floors", "Index", "Floors")</li>
+                        }
                         <li>@Html.ActionLink(LibraryWorkroomSystem.Models.Database.Sessions.getUser(), "MyAccount", "Home")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                       
                     }
                     @if (LibraryWorkroomSystem.Models.Database.Sessions.isLoggedIn() == false)
                     {

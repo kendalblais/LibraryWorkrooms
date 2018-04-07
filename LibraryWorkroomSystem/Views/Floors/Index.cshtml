@@ -1,0 +1,33 @@
+﻿<h2>list floors and #workrooms</h2>
+@model LibraryWorkroomSystem.Models.Database.Floors
+
+<table>
+    <tr>
+        <th>Floor Number</th>
+        <th>Number of Workrooms</th>
+    </tr>
+    @if(Model.list.Count() == 0)
+    {
+        <p>no floors listed</p>
+    }
+    @foreach(LibraryWorkroomSystem.Models.Database.Floor floor in Model.list)
+    {
+        <tr>
+            <th>@floor.floor_no</th>
+            <th>@floor.no_of_workrooms</th>
+        </tr>
+    }
+</table>
+<div class="container">
+
+    @using (Html.BeginForm("AddFloor", "Floors"))
+    {
+        <p>Floor Number:</p>
+        <input type="text" name="floorNumber"><br>
+        <button type="submit" class="btn btn-default">Add</button><br>
+
+    }
+   
+
+
+</div>

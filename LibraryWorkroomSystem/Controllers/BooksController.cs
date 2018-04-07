@@ -14,5 +14,20 @@ namespace LibraryWorkroomSystem.Controllers
         {
             return View();
         }
+
+        public ActionResult SearchBook()
+        {
+            return View();
+        }
+
+        public ActionResult AddBook()
+        {
+            return View();
+        }
+
+        public ActionResult ViewBooks()
+        {
+            return View();
+        }
     }
 }

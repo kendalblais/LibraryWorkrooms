@@ -144,6 +144,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\FloorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\WorkroomsController.cs" />
@@ -151,7 +152,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AbstractDatabase.cs" />
-    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\FloorsDB.cs" />
+    <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Models\BooksDB.cs" />
     <Compile Include="Models\Column.cs" />
     <Compile Include="Models\Debug.cs" />
@@ -206,6 +208,10 @@
     <Content Include="Views\Workrooms\Index.cshtml" />
     <Content Include="Views\Programs\Index.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Books\AddBook.cshtml" />
+    <Content Include="Views\Books\SearchBook.cshtml" />
+    <Content Include="Views\Books\ViewBooks.cshtml" />
+    <Content Include="Views\Floors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

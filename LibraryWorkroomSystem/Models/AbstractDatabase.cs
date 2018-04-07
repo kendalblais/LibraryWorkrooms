@@ -224,11 +224,18 @@ namespace LibraryWorkroomSystem.Models.Database
 
             modifications.Add("ALTER TABLE libraryworkroom.workroom " +
                 "ADD CONSTRAINT FK_floorW FOREIGN KEY(belonging_floor) REFERENCES libraryworkroom.floor(floor_no) ON DELETE CASCADE ON UPDATE CASCADE," +
-                "ADD CONSTRAINT FK_reserver FOREIGN KEY(reserver_username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE," +
                 "ADD CONSTRAINT FK_adminW FOREIGN KEY(admin_ID) REFERENCES libraryworkroom.employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE;");
 
             modifications.Add("ALTER TABLE libraryworkroom.program " +
                 "ADD CONSTRAINT FK_teacher FOREIGN KEY(teacher_ID) REFERENCES libraryworkroom.employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE;");
+
+            modifications.Add("ALTER TABLE libraryworkroom.workroombookings " +
+                "ADD CONSTRAINT FK_flrN FOREIGN KEY(floor_no) REFERENCES libraryworkroom.floor(floor_no) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "ADD CONSTRAINT FK_WrkR FOREIGN KEY(workroom_no) REFERENCES libraryworkroom.workroom(workroom_no) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "ADD CONSTRAINT FK_Bker FOREIGN KEY(reserver_username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE;");
+            
+
+
 
             try
             {
@@ -239,7 +246,7 @@ namespace LibraryWorkroomSystem.Models.Database
                         MySqlCommand command = new MySqlCommand(constraint, connection);
                         command.ExecuteNonQuery();
 
-                        closeConnection();
+                        
                     }
                 }
             }
@@ -247,6 +254,9 @@ namespace LibraryWorkroomSystem.Models.Database
             {
                 Debug.consoleMsg("Unable to create foreign key references "
                       + e.Number + e.Message);
+            }
+            finally {
+                closeConnection();
             }
         }
     }

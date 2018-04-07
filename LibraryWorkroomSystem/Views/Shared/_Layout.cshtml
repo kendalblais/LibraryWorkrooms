@@ -29,7 +29,10 @@
                     {
                         <li>@Html.ActionLink("Books", "Index", "Books")</li>
                         <li>@Html.ActionLink("Workrooms", "Index", "Workrooms")</li>
+                        if (LibraryWorkroomSystem.Models.Database.Sessions.getPremium() || LibraryWorkroomSystem.Models.Database.Sessions.getType() == "admin" || LibraryWorkroomSystem.Models.Database.Sessions.getType() == "employee")
+                        {
                         <li>@Html.ActionLink("Programs", "Index", "Programs")</li>
+                        }
                         if (LibraryWorkroomSystem.Models.Database.Sessions.getType() == "admin")
                         {
                             <li>@Html.ActionLink("Floors", "Index", "Floors")</li>

@@ -4,4 +4,24 @@
 <h4>Name: @Model.actualName</h4>
 <h4>Username: @Model.usrname</h4>
 <h4>Account Type: @Model.accType</h4>
-<h4>Premium User?: no</h4>
+@using (Html.BeginForm("ChangePremium", "Home"))
+{ 
+    if (LibraryWorkroomSystem.Models.Database.Sessions.getType() == "user")
+    {
+        string type;
+        string premium;
+        <h4>Premium User?: @Model.premium_or_not</h4>
+        if (Model.premium_or_not == false)
+        {
+            premium = "true";
+            type = "Become Premium";
+        }
+        else
+        {
+            premium = "false";
+            type = "Cancel Premium";
+        }
+        <input type="hidden" name="premium" value=@premium />
+        <button type="submit" class="btn btn-default">@type</button>
+    }
+}

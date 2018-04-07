@@ -34,6 +34,15 @@ namespace LibraryWorkroomSystem.Models.Database
             
         }
 
+        public static void setPremium(bool premium) {
+
+            HttpContext.Current.Session["premium"] = premium;
+        }
+
+        public static bool getPremium() {
+            return (bool)HttpContext.Current.Session["premium"];
+        }
+
         public static string setColour()
         {
             string response = "background-color:default";

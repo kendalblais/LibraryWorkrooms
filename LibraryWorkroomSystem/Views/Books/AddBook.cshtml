@@ -1,2 +1,37 @@
-﻿
-<h2>Add book data entry here</h2>
+﻿@model LibraryWorkroomSystem.Models.Database.FloorSelectModel
+
+<h2>Add Book</h2>
+
+<div class="container">
+    @using (Html.BeginForm("AddNewBook", "Books"))
+    {
+        <table>
+            <tr>
+                <td>Title:</td>
+                <td> @Html.TextBox("title", "", new { placeholder = "title" }) </td>
+            </tr>
+            <tr>
+                <td>Author:</td>
+                <td> @Html.TextBox("author", "", new { placeholder = "author's name" }) </td>
+            </tr>
+            <tr>
+                <td>Publish Date:</td>
+                <td> @Html.TextBox("publish_date", "", new { placeholder = "publish date" }) </td>
+            </tr>
+            <tr>
+                <td>Series(Leave blank if none):</td>
+                <td> @Html.TextBox("series", "", new { placeholder = "author" }) </td>
+            </tr>
+            <tr>
+                <td>Floor Location:</td>
+                
+                <td> @Html.DropDownList("floor", Model.list, "Select Floor") </td>
+            </tr>
+
+        </table>
+
+        <button type="submit" class="btn btn-default">Add Book</button><br>
+        <p>@ViewBag.Greeting</p>
+
+    }
+</div>

@@ -42,7 +42,22 @@ namespace LibraryWorkroomSystem.Controllers
             return View(account);
         }
 
-        
+
+        public ActionResult ChangePremium(String premium) {
+
+            if (premium == "true")
+            {
+                LibraryDatabase.getInstance().changePremium(true);
+                Sessions.setPremium(true);
+            }
+            else
+            {
+                LibraryDatabase.getInstance().changePremium(false);
+                Sessions.setPremium(false);
+            }
+            
+            return Redirect("MyAccount");
+        }
         public ActionResult AttemptLogin(String Username, String Password)
         {
             bool result = LibraryDatabase.getInstance().attemptLogin(Username, Password);
@@ -54,6 +69,7 @@ namespace LibraryWorkroomSystem.Controllers
 
             AccountType type = LibraryDatabase.getInstance().getAccountType(Username);
             Sessions.setUser(Username, type);
+            Sessions.setPremium(LibraryDatabase.getInstance().getAccountData().premium_or_not);
 
             return View("Index");
         }

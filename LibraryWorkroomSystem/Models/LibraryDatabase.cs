@@ -23,15 +23,26 @@ namespace LibraryWorkroomSystem.Models.Database
             return instance;
         }
 
-       
 
+        public void changePremium(bool premium) {
+
+            string query = @"UPDATE " + dbname + @".user SET premium_or_not = " + premium + @" WHERE username='" + Sessions.getUser() + @"';";
+            if (openConnection())
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.ExecuteReader();
+                closeConnection();
+            }
+        }
+
+   
         public Account getAccountData()
         {
             Account acct = new Account();
             string user = Sessions.getUser();
             acct.accType = getAccountType(user);
             acct.usrname = user;
-            acct.cardNo = null;
+            
 
             string query = @"SELECT * FROM " + dbname + @".user " +
                 @"WHERE username='" + user + @"';";
@@ -44,6 +55,7 @@ namespace LibraryWorkroomSystem.Models.Database
                     MySqlDataReader dataReader = command.ExecuteReader();
                     dataReader.Read();
                     acct.actualName = dataReader.GetString("name");
+                    acct.premium_or_not = dataReader.GetBoolean("premium_or_not");
 
                     dataReader.Close();
 
@@ -100,7 +112,7 @@ namespace LibraryWorkroomSystem.Models.Database
             else
             {
                 result = false;
-
+                
             }
             if (!result)
                 return AccountType.user;
@@ -152,7 +164,9 @@ namespace LibraryWorkroomSystem.Models.Database
             }
             else
             {
+                
                 throw new Exception("Could not connect to database.");
+                
             }
             
             return response;
@@ -227,75 +241,9 @@ namespace LibraryWorkroomSystem.Models.Database
 
             return result;
         }
-        /// <summary>
-        /// Gets a long URL based on the id of the short url
-        /// </summary>
-        /// <param name="id">The id of the short url</param>
-        /// <throws type="ArgumentException">Throws an argument exception if the short url id does not refer to anything in the database</throws>
-        /// <returns>The long url the given short url refers to</returns>
-        public string getLongUrl(string id)
-        {
-            string query = @"SELECT * FROM " + dbname + ".shortenedLinks "
-                + "WHERE id=" + id + ";";
+   
 
-            if(openConnection() == true)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if(reader.Read() == true)
-                {
-                    return reader.GetString("original");
-                }
-                else
-                {
-                    //Throw an exception indicating no result was found
-                    throw new ArgumentException("No url in the database matches that id.");
-                }
-            }
-            else
-            {
-                throw new Exception("Could not connect to database.");
-            }
-        }
-
-        /// <summary>
-        /// Saves the longURL to the database to be accessed later via the id that is returned.
-        /// </summary>
-        /// <param name="longURL">The longURL to be saved</param>
-        /// <returns>The id of the url</returns>
-        public string saveLongURL(string longURL)
-        {
-            string query = @"INSERT INTO " + dbname + ".shortenedLinks(original) "
-                + @"VALUES('" + longURL + @"');";
-
-            if(openConnection() == true)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.ExecuteNonQuery();
-
-                command.CommandText = "SELECT * FROM " + dbname + ".shortenedLinks WHERE id = LAST_INSERT_ID();";
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if(reader.Read() == true)
-                {
-                    string result = reader.GetInt64("id").ToString();
-                    closeConnection();
-                    return result.ToString();
-                }
-                else
-                {
-                    closeConnection();
-                    throw new Exception("Error: LAST_INSERT_ID() did not work as intended.");
-                }
-            }
-            else
-            {
-                throw new Exception("Could not connect to database");
-            }
-        }
-
+  
     }
 
     public partial class LibraryDatabase : AbstractDatabase
@@ -316,7 +264,7 @@ namespace LibraryWorkroomSystem.Models.Database
             {
                 new Column( "title", "VARCHAR(300)", new string[] { "NOT NULL" }, true),  // primary key
                 new Column( "author", "VARCHAR(300)", new string[] { "NOT NULL" }, true), // primary key
-                new Column( "publish_date", "DATE", new string[] { "NOT NULL" }, false),
+                new Column( "publish_date", "VARCHAR(300)", new string[] { "NOT NULL" }, false),
                 new Column( "series", "VARCHAR(300)", null, false),
                 new Column( "renter_username", "VARCHAR(300)", null, false),              // null means no mods to that attribute
                 new Column( "take_out_date", "DATE", null, false),
@@ -331,6 +279,7 @@ namespace LibraryWorkroomSystem.Models.Database
                 new Column( "username", "VARCHAR(300)", new string[] { "NOT NULL", "UNIQUE" }, true),
                 new Column( "name", "VARCHAR(300)", new string[] { "NOT NULL" }, false),
                 new Column( "password", "VARCHAR(300)", new string[] { "NOT NULL" }, false),
+                new Column( "premium_or_not", "BOOLEAN", new string[] { "DEFAULT false" }, false),
                 new Column( "admin_ID", "INTEGER", null, false)
             }),
 

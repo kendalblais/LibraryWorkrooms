@@ -1,1 +1,26 @@
-﻿<h2>Workrooms</h2>
+﻿<!-- 
+    TODO: Finish dis.
+    -->
+<html>
+<head>
+    <script>
+    function populateFloors()
+    {
+        for (i = 1; i <= @(LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getNumberOfFloors()); i++)
+        {
+            document.getElementById("floors").innerHTML += "<option value=\"" + i + "\">" + i + "</option>";
+        }
+        
+    }
+    </script>
+</head>
+
+<body>
+    <h2>Workrooms</h2>
+    <h3>Please select a floor.</h3>
+    <select id="floors"></select>
+    <script>populateFloors();</script>
+    <br />
+    <br />
+</body>
+</html>

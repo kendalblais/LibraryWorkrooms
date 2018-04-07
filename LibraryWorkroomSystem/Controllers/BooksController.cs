@@ -35,7 +35,10 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult AddNewBook(String title, String author, String publish_date, String series, String floor)
         {
-            return Redirect("Index");
+            LibraryDatabase.getInstance().addBook(title, author, publish_date, series, Int32.Parse(floor));
+            ViewBag.confirmMessage = "Book Added!";
+            return Redirect("AddBook");
+            
         }
 
         public ActionResult ViewBooks()

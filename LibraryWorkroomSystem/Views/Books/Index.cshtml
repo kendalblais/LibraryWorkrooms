@@ -1,8 +1,9 @@
 ﻿<h2>Books</h2>
-
+<script type="text/javascript" src="~/Scripts/Books/books.js"></script>
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("SearchBook", "Books"))
+        @using (Html.BeginForm("SearchBook", "Books", FormMethod.Get,
+        new { id = "searchData", onsubmit = "return validateSearch()" }))
         {
             <h2>Search Book</h2>
             <p>Search for books by by their title or author. </p>

@@ -1,9 +1,11 @@
 ﻿@model LibraryWorkroomSystem.Models.Database.MySelectModel
+<script type="text/javascript" src="~/Scripts/Programs/programs.js"></script>
 
 <h2>Add Program</h2>
 
 <div class="container">
-    @using (Html.BeginForm("AddNewProgram", "Programs"))
+    @using (Html.BeginForm("AddNewProgram", "Programs", FormMethod.Get,
+        new { id = "programData", onsubmit = "return checkProgramData()" }))
     {
         <table>
             <tr>
@@ -22,7 +24,7 @@
                 <td>Start Time:</td>
                 <td> @Html.TextBox("startTime", "", new { placeholder = "11:00:00" }) </td>
             </tr>
-             <tr>
+            <tr>
                 <td>End Time:</td>
                 <td> @Html.TextBox("endTime", "", new { placeholder = "13:00:00" }) </td>
             </tr>

@@ -1,9 +1,10 @@
 ﻿@model LibraryWorkroomSystem.Models.Database.MySelectModel
-
+<script type="text/javascript" src="~/Scripts/Books/books.js"></script>
 <h2>Add Book</h2>
 
 <div class="container">
-    @using (Html.BeginForm("AddNewBook", "Books"))
+    @using (Html.BeginForm("AddNewBook", "Books", FormMethod.Get,
+        new { id = "bookData", onsubmit = "return checkBookData()" }))
     {
         <table>
             <tr>

@@ -236,6 +236,79 @@ namespace LibraryWorkroomSystem.Models.Database
             }
         }
 
+        public void deleteProgram(string progName)
+        {
+            string query = "DELETE FROM " + dbname + ".program WHERE name = '" +
+                progName + "';";
+
+            if (openConnection() == true)
+            {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.ExecuteReader();
+
+                closeConnection();
+            }
+        }
+
+        public string[] retrieveRegisteredPrograms()
+        {
+            string query = @"SELECT * FROM " + dbname + @".users_in_programs WHERE username = '" +
+                Sessions.getUser() + @"';";
+
+            string[] programs = null;
+            if (openConnection() == true)
+            {
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+
+                    List<string> temp = new List<string>();
+                    while (dataReader.Read())
+                    {
+                        temp.Add(dataReader.GetString("program_name"));
+                    }
+                    dataReader.Close();
+                    programs = temp.ToArray();
+
+                }
+                catch (MySqlException e)
+                {
+
+                }
+                catch (Exception e)
+                {
+
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+            else
+            {
+
+            }
+            return programs;
+
+        }
+
+        public void cancelRegistration(string progName)
+        {
+            string query = "DELETE FROM " + dbname + ".users_in_programs WHERE program_name = '" +
+               progName + "' AND username = '" + Sessions.getUser() + @"';";
+
+            if (openConnection() == true)
+            {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.ExecuteReader();
+
+                closeConnection();
+            }
+        }
+
 
                 
     }

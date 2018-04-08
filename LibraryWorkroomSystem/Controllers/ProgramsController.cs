@@ -25,6 +25,8 @@ namespace LibraryWorkroomSystem.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            string[] registeredList = LibraryDatabase.getInstance().retrieveRegisteredPrograms();
+            ViewBag.registeredList = registeredList;
             return View();
         }
 
@@ -62,6 +64,10 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult AddNewProgram(String name, String description, String date, String startTime, String endTime, String teacherID)
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             LibraryDatabase.getInstance().addProgram(name, description, date, startTime, endTime, teacherID);
             return Redirect("Index");
         }
@@ -88,6 +94,31 @@ namespace LibraryWorkroomSystem.Controllers
            
             LibraryDatabase.getInstance().registerForProgram(progName);
             return Redirect("Index");
+        }
+
+        public ActionResult DeleteProgram(String progName)
+        {
+
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            LibraryDatabase.getInstance().deleteProgram(progName);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult CancelRegistration(String progName)
+        {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            LibraryDatabase.getInstance().cancelRegistration(progName);
+
+            return Redirect("Index");
+
         }
     }
 }

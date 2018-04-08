@@ -8,7 +8,7 @@
 
 <div class="container">
     @using (Html.BeginForm("CreateAccountRequest", "Home", FormMethod.Post,
-        new { id = "accountData", onsubmit = "checkAccountData()" }))
+        new { id = "accountData", onsubmit = "return checkAccountData()" }))
     {
         <table>
             <tr>

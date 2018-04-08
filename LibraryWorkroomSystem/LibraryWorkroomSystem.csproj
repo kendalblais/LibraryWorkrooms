@@ -152,6 +152,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AbstractDatabase.cs" />
+    <Compile Include="Models\DataTypes\Workroom.cs" />
+    <Compile Include="Models\DataTypes\WorkroomReservation.cs" />
     <Compile Include="Models\FloorsDB.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Models\BooksDB.cs" />
@@ -167,6 +169,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\available.jpg" />
+    <Content Include="Content\Images\booked.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -194,6 +198,7 @@
     <Content Include="Scripts\Programs\programs.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Workrooms\WorkroomScripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -218,6 +223,8 @@
     <Content Include="Views\Books\SearchBook.cshtml" />
     <Content Include="Views\Books\ViewBooks.cshtml" />
     <Content Include="Views\Floors\Index.cshtml" />
+    <Content Include="Views\Workrooms\WorkroomSelection.cshtml" />
+    <Content Include="Views\Workrooms\DisplayWorkroom.cshtml" />
     <Content Include="Views\Books\DisplayBook.cshtml" />
     <Content Include="Views\Books\DisplaySeries.cshtml" />
     <Content Include="Views\Programs\ViewAllPrograms.cshtml" />

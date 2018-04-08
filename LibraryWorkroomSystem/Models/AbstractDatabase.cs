@@ -279,6 +279,7 @@ namespace LibraryWorkroomSystem.Models.Database
         //TODO: Change before deployment
         private const string Password = "cpsc471";
 
+
         /// <summary>
         /// This is the name of the database. This property must be defined by the inheriting class
         /// </summary>

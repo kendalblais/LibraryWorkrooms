@@ -10,16 +10,44 @@
         {
             document.getElementById("floors").innerHTML += "<option value=\"" + i + "\">" + i + "</option>";
         }
-        
     }
     </script>
+
+    <script type="text/javascript" src="~/Scripts/Workrooms/WorkroomScripts.js"></script>
 </head>
 
 <body>
     <h2>Workrooms</h2>
+
+    @using (Html.BeginForm("WorkroomSelection", "Workrooms", FormMethod.Post, new { id = "workroomSearch", onsubmit = "validateDate()" }))
+    {
     <h3>Please select a floor.</h3>
-    <select id="floors"></select>
+    <select id="floors" name="floornum">Floor</select>
     <script>populateFloors();</script>
+    <br />
+    <h3>Please select a date. (DD--MM-YYYY)</h3>
+    <select name="day">
+        @for (int i = 1; i <= 31; i++)
+        {
+            <option value="@i">@i</option>
+            }
+    </select>
+    <select name="month">
+        @for (int i = 1; i <= 12; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+    <select name="year">
+        @for (int i = 2018; i <= 2025; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+    <br />
+    <br />
+    <button type="submit" class="btn btn-default">Search</button>
+    }
     <br />
     <br />
 </body>

@@ -15,9 +15,39 @@ namespace LibraryWorkroomSystem.Controllers
             return View();
         }
 
-        public ActionResult SearchBook()
+        public ActionResult SearchBook(String SearchBox)
         {
+            string[] bookList = LibraryDatabase.getInstance().searchBooks(SearchBox, "search");
+
+            ViewBag.bookList = bookList;
+
             return View();
+        }
+
+        public ActionResult DisplaySeries(String id)
+        {
+            string[] seriesList = LibraryDatabase.getInstance().searchBooks(id, "series");
+            ViewBag.seriesList = seriesList;
+            ViewBag.series = id;
+            return View();
+        }
+
+        public ActionResult DisplayBook(string id)
+        {
+            string title = id.Substring(0, id.IndexOf("("));
+            string author = id.Substring(id.IndexOf("(") + 1, id.IndexOf(")") - 1 - id.IndexOf("("));
+            Book book = LibraryDatabase.getInstance().getBook(title, author);
+            
+            return View(book);
+        }
+
+        public ActionResult TakeOutBook(String title, String author)
+        {
+            DateTime takeout = DateTime.Now;
+            DateTime returnDate = takeout.AddDays(7);
+
+            LibraryDatabase.getInstance().takeOutBook(title, author, takeout, returnDate);
+            return Redirect("Index");
         }
 
         public ActionResult AddBook()
@@ -43,7 +73,21 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult ViewBooks()
         {
+            string[] rentedList = LibraryDatabase.getInstance().searchBooks(null, "rented");
+            ViewBag.rentedList = rentedList;
             return View();
+        }
+
+        public ActionResult DeleteBook(String title, String author)
+        {
+            LibraryDatabase.getInstance().deleteBook(title, author);
+            return Redirect("Index");
+        }
+
+        public ActionResult UpdateAvailable(String title, String author)
+        {
+            LibraryDatabase.getInstance().updateBookAvailability(title, author);
+            return Redirect("Index");
         }
     }
 }

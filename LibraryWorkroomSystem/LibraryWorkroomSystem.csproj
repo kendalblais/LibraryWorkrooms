@@ -212,6 +212,8 @@
     <Content Include="Views\Books\SearchBook.cshtml" />
     <Content Include="Views\Books\ViewBooks.cshtml" />
     <Content Include="Views\Floors\Index.cshtml" />
+    <Content Include="Views\Books\DisplayBook.cshtml" />
+    <Content Include="Views\Books\DisplaySeries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

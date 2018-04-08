@@ -209,11 +209,7 @@ namespace LibraryWorkroomSystem.Models.Database
             List<string> modifications = new List<string>();
             modifications.Add("ALTER TABLE libraryworkroom.book " +
                 "ADD CONSTRAINT FK_renter FOREIGN KEY(renter_username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE," +
-                "ADD CONSTRAINT FK_floorB FOREIGN KEY(belonging_floor) REFERENCES libraryworkroom.floor(floor_no) ON DELETE CASCADE ON UPDATE CASCADE," +
-                "ADD CONSTRAINT FK_bookkeeper FOREIGN KEY(bookkeeper_ID) REFERENCES libraryworkroom.employee(employee_ID) ON DELETE CASCADE ON UPDATE CASCADE;");
-
-            modifications.Add("ALTER TABLE libraryworkroom.user " +
-                "ADD CONSTRAINT FK_admin FOREIGN KEY(admin_ID) REFERENCES libraryworkroom.employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE;");
+                "ADD CONSTRAINT FK_floorB FOREIGN KEY(belonging_floor) REFERENCES libraryworkroom.floor(floor_no) ON DELETE CASCADE ON UPDATE CASCADE;");
 
             modifications.Add("ALTER TABLE libraryworkroom.employee " +
                 "ADD CONSTRAINT FK_user FOREIGN KEY(emp_username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE;");
@@ -223,8 +219,7 @@ namespace LibraryWorkroomSystem.Models.Database
                 "ADD CONSTRAINT FK_userP FOREIGN KEY(username) REFERENCES libraryworkroom.user(username) ON DELETE CASCADE ON UPDATE CASCADE;");
 
             modifications.Add("ALTER TABLE libraryworkroom.workroom " +
-                "ADD CONSTRAINT FK_floorW FOREIGN KEY(belonging_floor) REFERENCES libraryworkroom.floor(floor_no) ON DELETE CASCADE ON UPDATE CASCADE," +
-                "ADD CONSTRAINT FK_adminW FOREIGN KEY(admin_ID) REFERENCES libraryworkroom.employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE;");
+                "ADD CONSTRAINT FK_floorW FOREIGN KEY(belonging_floor) REFERENCES libraryworkroom.floor(floor_no) ON DELETE CASCADE ON UPDATE CASCADE;");
 
             modifications.Add("ALTER TABLE libraryworkroom.program " +
                 "ADD CONSTRAINT FK_teacher FOREIGN KEY(teacher_ID) REFERENCES libraryworkroom.employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE;");
@@ -282,7 +277,7 @@ namespace LibraryWorkroomSystem.Models.Database
         /// This is the password used to login to the database by the connection
         /// </summary>
         //TODO: Change before deployment
-        private const string Password = "password";
+        private const string Password = "cpsc471";
 
         /// <summary>
         /// This is the name of the database. This property must be defined by the inheriting class

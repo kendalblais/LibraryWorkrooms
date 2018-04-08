@@ -1,2 +1,19 @@
 ﻿
-<h2>view all books currently taken out by user</h2>
+<h2>Your Currently Rented Books</h2>
+
+@if (ViewBag.rentedList != null)
+{
+    if (ViewBag.rentedList.Length == 0)
+    {
+        <p>You currently have not taken out any books.</p>
+    }
+    else
+    {
+        <p style="font-size:larger">Results:</p> <br />
+        foreach (string item in ViewBag.rentedList)
+        {
+            @Html.ActionLink(item, "DisplayBook/" + item, "Books")
+            <br />
+        }
+    }
+}

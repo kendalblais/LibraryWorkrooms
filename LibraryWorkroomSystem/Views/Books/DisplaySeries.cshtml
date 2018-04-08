@@ -1,0 +1,18 @@
+﻿<h2>Series: @ViewBag.series</h2>
+
+@if (ViewBag.seriesList != null)
+{
+    if (ViewBag.seriesList.Length == 0)
+    {
+        <p>No books in this series.</p>
+    }
+    else
+    {
+        <p style="font-size:larger">Results:</p> <br />
+        foreach (string item in ViewBag.seriesList)
+        {
+            @Html.ActionLink(item, "DisplayBook/" + item, "Books")
+            <br />
+        }
+    }
+}

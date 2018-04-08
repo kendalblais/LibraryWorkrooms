@@ -1,0 +1,100 @@
+﻿@model LibraryWorkroomSystem.Models.Database.Book
+
+
+<h2>@Model.title</h2>
+
+<table>
+    <tr>
+        <td>Author: </td>
+        <td>@Model.author</td>
+    </tr>
+    <tr>
+        <td>Publish Date: </td>
+        <td>@Model.publish_date</td>
+    </tr>
+    <tr>
+        <td>Series: </td>
+        @if (Model.series == null)
+        {
+            <td>@Model.series</td>
+        }
+        @if (Model.series != null && Model.series != "")
+        {
+            <td>@Html.ActionLink(Model.series, "DisplaySeries/" + Model.series, "Books")</td>
+        }
+    </tr>
+    <tr>
+        <td>Floor Number: </td>
+        <td>@Model.floorNumber</td>
+    </tr>
+    <tr>
+        <td>Availability: </td>
+        @using (Html.BeginForm("TakeOutBook", "Books"))
+        {
+            if (Model.renter == null)
+            {
+                <td>Available</td>
+                @Html.Hidden("title", Model.title);
+                @Html.Hidden("author", Model.author);
+                <td><button type="submit" class="btn btn-default">Rent For 7 Days</button></td>
+            }
+        }
+       
+        @if (Model.renter != null)
+        {
+            <td>Taken</td>
+            using (Html.BeginForm("UpdateAvailable", "Books"))
+            {
+                if (LibraryWorkroomSystem.Models.Database.Sessions.getType() == "employee")
+                {
+                    @Html.Hidden("title", Model.title);
+                    @Html.Hidden("author", Model.author);
+                    <td><button type="submit" class="btn btn-default">Returned</button></td>
+                }
+            }
+        }
+
+
+    </tr>
+    @if (LibraryWorkroomSystem.Models.Database.Sessions.getType() == "admin" || LibraryWorkroomSystem.Models.Database.Sessions.getType() == "employee")
+    {
+        <tr>
+            <td>Renter: </td>
+            <td>@Model.renter </td>
+        </tr>
+        <tr>
+
+            <td>Take Out Date: </td>
+            @if (Model.take_out_date.ToString() == "0001-01-01 12:00:00 AM")
+            {
+                <td> </td>
+            }
+            @if (Model.take_out_date.ToString() != "0001-01-01 12:00:00 AM")
+            {
+                <td>@Model.take_out_date </td>
+            }
+
+        </tr>
+        <tr>
+            <td>Due Date: </td>
+            @if (Model.returnDate.ToString() == "0001-01-01 12:00:00 AM")
+            {
+                <td> </td>
+            }
+            @if (Model.returnDate.ToString() != "0001-01-01 12:00:00 AM")
+            {
+                <td>@Model.returnDate </td>
+            }
+        </tr>
+    }
+
+</table>
+@if (LibraryWorkroomSystem.Models.Database.Sessions.getType() == "admin")
+{
+    using (Html.BeginForm("DeleteBook", "Books"))
+    {
+    @Html.Hidden("title", Model.title);
+    @Html.Hidden("author", Model.author);
+    <button type="submit" class="btn btn-default">Remove Book</button>
+    }
+}

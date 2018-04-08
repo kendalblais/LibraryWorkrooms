@@ -267,10 +267,10 @@ namespace LibraryWorkroomSystem.Models.Database
                 new Column( "publish_date", "VARCHAR(300)", new string[] { "NOT NULL" }, false),
                 new Column( "series", "VARCHAR(300)", null, false),
                 new Column( "renter_username", "VARCHAR(300)", null, false),              // null means no mods to that attribute
-                new Column( "take_out_date", "DATE", null, false),
-                new Column( "return_date", "DATE", null, false),
-                new Column( "belonging_floor", "INTEGER", null, false),
-                new Column( "bookkeeper_ID", "INTEGER", null, false)
+                new Column( "take_out_date", "DATETIME", null, false),
+                new Column( "return_date", "DATETIME", null, false),
+                new Column( "belonging_floor", "INTEGER", null, false)
+                
             }),
         
             // This represents the USER table that keeps track of all the users in the system 
@@ -279,8 +279,8 @@ namespace LibraryWorkroomSystem.Models.Database
                 new Column( "username", "VARCHAR(300)", new string[] { "NOT NULL", "UNIQUE" }, true),
                 new Column( "name", "VARCHAR(300)", new string[] { "NOT NULL" }, false),
                 new Column( "password", "VARCHAR(300)", new string[] { "NOT NULL" }, false),
-                new Column( "premium_or_not", "BOOLEAN", new string[] { "DEFAULT false" }, false),
-                new Column( "admin_ID", "INTEGER", null, false)
+                new Column( "premium_or_not", "BOOLEAN", new string[] { "DEFAULT false" }, false)
+                
             }),
 
             // This represents the FLOOR table that keeps track of all the floors in the building
@@ -303,8 +303,8 @@ namespace LibraryWorkroomSystem.Models.Database
             {
                 new Column( "workroom_no", "INTEGER", new string[] { "NOT NULL" }, true),
                 new Column( "belonging_floor", "INTEGER", new string[] { "NOT NULL" }, true),
-                new Column( "room_size", "INTEGER", new string[] { "NOT NULL" }, false),
-                new Column( "admin_ID", "INTEGER", null, false)
+                new Column( "room_size", "INTEGER", new string[] { "NOT NULL" }, false)
+                
             }),
 
             // This represents the PROGRAM table that keeps track of all the different programs offered by the library

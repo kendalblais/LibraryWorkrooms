@@ -6,6 +6,25 @@ using System.Web.Mvc;
 
 namespace LibraryWorkroomSystem.Models.Database
 {
+
+    public class Book
+    {
+        public String title { get; set; }
+
+        public String author { get; set; }
+
+        public String publish_date { get; set; }
+
+        public String series { get; set; }
+
+        public String renter { get; set; }
+
+        public DateTime take_out_date { get; set; }
+
+        public DateTime returnDate { get; set; } 
+
+        public int floorNumber { get; set; }
+    }
     public class Account
     {
         public AccountType accType { get; set; }

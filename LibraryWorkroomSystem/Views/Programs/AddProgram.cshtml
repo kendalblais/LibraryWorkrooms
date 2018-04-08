@@ -1,0 +1,41 @@
+﻿@model LibraryWorkroomSystem.Models.Database.MySelectModel
+
+<h2>Add Program</h2>
+
+<div class="container">
+    @using (Html.BeginForm("AddNewProgram", "Programs"))
+    {
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td> @Html.TextBox("name", "", new { placeholder = "Program Name" }) </td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td> @Html.TextArea("description", "", new { placeholder = "This is a description of the program." }) </td>
+            </tr>
+            <tr>
+                <td>Date:</td>
+                <td> @Html.TextBox("date", "", new { placeholder = "yyyy-MM-dd" }) </td>
+            </tr>
+            <tr>
+                <td>Start Time:</td>
+                <td> @Html.TextBox("startTime", "", new { placeholder = "11:00:00" }) </td>
+            </tr>
+             <tr>
+                <td>End Time:</td>
+                <td> @Html.TextBox("endTime", "", new { placeholder = "13:00:00" }) </td>
+            </tr>
+            <tr>
+                <td>Teacher ID:</td>
+
+                <td> @Html.DropDownList("teacherID", Model.list, "Select Teacher") </td>
+            </tr>
+
+        </table>
+
+        <button type="submit" class="btn btn-default">Add Program</button><br>
+        <p>@ViewBag.confirmMessage</p>
+
+    }
+</div>

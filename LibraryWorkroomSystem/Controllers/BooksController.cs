@@ -12,11 +12,19 @@ namespace LibraryWorkroomSystem.Controllers
         // GET: Books
         public ActionResult Index()
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         public ActionResult SearchBook(String SearchBox)
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string[] bookList = LibraryDatabase.getInstance().searchBooks(SearchBox, "search");
 
             ViewBag.bookList = bookList;
@@ -26,6 +34,10 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult DisplaySeries(String id)
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string[] seriesList = LibraryDatabase.getInstance().searchBooks(id, "series");
             ViewBag.seriesList = seriesList;
             ViewBag.series = id;
@@ -34,6 +46,10 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult DisplayBook(string id)
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string title = id.Substring(0, id.IndexOf("("));
             string author = id.Substring(id.IndexOf("(") + 1, id.IndexOf(")") - 1 - id.IndexOf("("));
             Book book = LibraryDatabase.getInstance().getBook(title, author);
@@ -43,6 +59,10 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult TakeOutBook(String title, String author)
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             DateTime takeout = DateTime.Now;
             DateTime returnDate = takeout.AddDays(7);
 
@@ -52,6 +72,12 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult AddBook()
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+
             Floors allFloors = LibraryDatabase.getInstance().getFloors();
             List<SelectListItem> items = new List<SelectListItem>();
             foreach (Floor flr in allFloors.list)
@@ -59,12 +85,16 @@ namespace LibraryWorkroomSystem.Controllers
                 items.Add(new SelectListItem { Text = flr.floor_no.ToString(), Value = flr.floor_no.ToString() });
             }
 
-            var model = new FloorSelectModel { list = items };
+            var model = new MySelectModel { list = items };
             return View(model);
         }
 
         public ActionResult AddNewBook(String title, String author, String publish_date, String series, String floor)
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             LibraryDatabase.getInstance().addBook(title, author, publish_date, series, Int32.Parse(floor));
             ViewBag.confirmMessage = "Book Added!";
             return Redirect("AddBook");
@@ -73,6 +103,10 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult ViewBooks()
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string[] rentedList = LibraryDatabase.getInstance().searchBooks(null, "rented");
             ViewBag.rentedList = rentedList;
             return View();
@@ -80,12 +114,20 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult DeleteBook(String title, String author)
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             LibraryDatabase.getInstance().deleteBook(title, author);
             return Redirect("Index");
         }
 
         public ActionResult UpdateAvailable(String title, String author)
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             LibraryDatabase.getInstance().updateBookAvailability(title, author);
             return Redirect("Index");
         }

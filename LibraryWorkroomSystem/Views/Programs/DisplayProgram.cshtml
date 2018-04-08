@@ -1,0 +1,48 @@
+﻿@model LibraryWorkroomSystem.Models.Database.Program
+
+<h2>@Model.name</h2>
+<table>
+    <tr>
+        <td>Program Name: </td>
+        <td>@Model.name</td>
+    </tr>
+    <tr>
+        <td>Description: </td>
+        <td>@Model.description</td>
+    </tr>
+    <tr>
+        <td>Date: </td>
+        <td>@Model.date</td>
+    </tr>
+    <tr>
+        <td>Start Time: </td>
+        <td>@Model.startTime</td>
+    </tr>
+    <tr>
+        <td>End Time: </td>
+        <td>@Model.endTime</td>
+    </tr>
+    <tr>
+        <td>Teacher's ID: </td>
+        <td>@Model.teacherID</td>
+    </tr>
+
+</table>
+
+@if (!Model.inProgram)
+{
+    using (Html.BeginForm("RegisterProgram", "Programs")) //TODO IMPLEMENT REGISTER
+    {
+        @Html.Hidden("progName", Model.name);
+        <button type="submit" class="btn btn-default">Register!</button>
+    }
+}
+
+@if (LibraryWorkroomSystem.Models.Database.Sessions.getType() == "admin")
+{
+    using (Html.BeginForm("DeleteProgram", "Programs")) //TODO IMPLEMENT DELETE
+    {
+        @Html.Hidden("progName", Model.name);
+        <button type="submit" class="btn btn-default">Remove Program</button>
+    }
+}

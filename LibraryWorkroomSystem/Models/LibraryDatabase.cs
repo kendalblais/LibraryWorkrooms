@@ -311,6 +311,7 @@ namespace LibraryWorkroomSystem.Models.Database
             new Table ( dbname, "program", new Column[]
             {
                 new Column( "name", "VARCHAR(300)", new string[] { "NOT NULL", "UNIQUE" }, true),
+                new Column( "description", "VARCHAR(1000)", new string[] { "NOT NULL"}, false),
                 new Column( "date", "DATE", new string[] { "NOT NULL "}, false),
                 new Column( "start_time", "TIME", new string[] { "NOT NULL" }, false),
                 new Column( "end_time", "TIME", new string[] { "NOT NULL" }, false),

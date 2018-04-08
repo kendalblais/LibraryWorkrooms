@@ -25,6 +25,24 @@ namespace LibraryWorkroomSystem.Models.Database
 
         public int floorNumber { get; set; }
     }
+
+    public class Program
+    {
+        public String name { get; set; }
+
+        public String description { get; set; }
+
+        public String date { get; set; }
+
+        public String startTime { get; set; }
+
+        public String endTime { get; set; }
+
+        public int teacherID { get; set; }
+
+        public bool inProgram { get; set; } = false;
+    }
+
     public class Account
     {
         public AccountType accType { get; set; }
@@ -42,7 +60,7 @@ namespace LibraryWorkroomSystem.Models.Database
         public List<Floor> list = new List<Floor>();
     }
 
-    public class FloorSelectModel {
+    public class MySelectModel {
         public IEnumerable<SelectListItem> list { get; set; }
     }
 

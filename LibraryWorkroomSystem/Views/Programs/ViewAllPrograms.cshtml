@@ -1,0 +1,19 @@
+﻿
+<h2>All Programs</h2>
+
+@if (ViewBag.progList != null)
+{
+    if (ViewBag.progList.Length == 0)
+    {
+        <p>There are currently no programs being offered.</p>
+    }
+    else
+    {
+        <p style="font-size:larger">Results:</p> <br />
+        foreach (string item in ViewBag.progList)
+        {
+            @Html.ActionLink(item, "DisplayProgram/" + item, "Programs")
+            <br />
+        }
+    }
+}

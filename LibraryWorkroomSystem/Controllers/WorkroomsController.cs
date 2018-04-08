@@ -14,5 +14,20 @@ namespace LibraryWorkroomSystem.Controllers
         {
             return View();
         }
+
+        public ActionResult WorkroomSelection(int floornum, int day, int month, int year)
+        {
+            ViewBag.floornum = floornum;
+            ViewBag.day = day;
+            ViewBag.month = month;
+            ViewBag.year = year;
+            return View();
+        }
+
+        public ActionResult DisplayWorkroom(int floorNum, int roomNum, int day, int month, int year, int time)
+        {
+            ViewBag.time = time;
+            return View();
+        }
     }
 }

@@ -282,7 +282,7 @@ namespace LibraryWorkroomSystem.Models.Database
         /// This is the password used to login to the database by the connection
         /// </summary>
         //TODO: Change before deployment
-        private const string Password = "password";
+        private const string Password = "WeLoveHim!97";
 
         /// <summary>
         /// This is the name of the database. This property must be defined by the inheriting class

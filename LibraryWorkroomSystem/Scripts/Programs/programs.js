@@ -21,7 +21,8 @@ function checkProgramData() {
 		return false;
 	}
 
-	if (!date.test(String(programData.endTime.value))) {
+    //I think there was a bug here. Change from date.test to time.test
+	if (!time.test(String(programData.endTime.value))) {
 		window.alert("Time must be in the form of hh:mm:ss");
 		return false;
 	}

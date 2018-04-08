@@ -126,6 +126,58 @@ namespace LibraryWorkroomSystem.Models.Database
         }
 
         /// <summary>
+        /// Returns reservations based on username.
+        /// </summary>
+        /// <param name="username">The username used to search for reservations in the database.</param>
+        /// <returns>A list of reservations booked by the user.</returns>
+        public List<WorkroomReservation> getReservations(string username)
+        {
+            if(openConnection())
+            {
+                List<WorkroomReservation> toReturn = new List<WorkroomReservation>();
+
+                try
+                {
+                    string query = @"SELECT * FROM " + dbname + @".WORKROOMBOOKINGS WHERE RESERVER_USERNAME = '" + username + @"';";
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    MySqlDataReader red = com.ExecuteReader();
+
+                    //Read through database and get reservation information. Add that information to the list.
+                    while (red.Read())
+                    {
+                        WorkroomReservation tempRes = new WorkroomReservation
+                        {
+                            room = new Workroom
+                            {
+                                floor = red.GetInt32("FLOOR_NO"),
+                                number = red.GetInt32("WORKROOM_NO")
+                            },
+                            reserver = red.GetString("RESERVER_USERNAME"),
+                            timeOfReservation = red.GetDateTime("TIME_OF_RESERVATION")
+                        };
+
+                        toReturn.Add(tempRes);
+                    }
+                }
+                catch(Exception a)
+                {
+                    Console.WriteLine("Issue occurred when retrieving reservation information from database for user: " + username + ".");
+                    Console.WriteLine(a.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+
+                return toReturn;
+            }
+            else
+            {
+                throw new Exception("Issue connecting to database. Could not retrieve reservation information for user: " + username + ".");
+            }
+        }
+
+        /// <summary>
         /// This function searches the database and returns information about workrooms.
         /// </summary>
         /// <param name="floorNum">This number represents which floor to select from.</param>
@@ -149,8 +201,7 @@ namespace LibraryWorkroomSystem.Models.Database
                         {
                             floor = red.GetInt32("BELONGING_FLOOR"),
                             number = red.GetInt32("WORKROOM_NO"),
-                            size = red.GetInt32("ROOM_SIZE"),
-                            admin = red.GetInt32("ADMIN_ID")
+                            size = red.GetInt32("ROOM_SIZE")
                         };
 
                         toReturn.Add(tempRoom);
@@ -171,6 +222,47 @@ namespace LibraryWorkroomSystem.Models.Database
             else
             {
                 throw new Exception("Issue connecting to database. Could not retrieve workroom information.");
+            }
+        }
+
+        /// <summary>
+        /// This function attempts to store a workroom booking in the database.
+        /// </summary>
+        /// <param name="roomNum">Room number of workroom.</param>
+        /// <param name="floorNum">Floor number of workroom.</param>
+        /// <param name="username">Username of the user trying to book the workroom.</param>
+        /// <param name="date">Date of when to book the workroom.</param>
+        /// <returns>true if successful, false otherwise.</returns>
+        public bool bookWorkroom(int roomNum, int floorNum, string username, DateTime date)
+        {
+            if(openConnection())
+            {
+                int result = 0;
+                try
+                {
+                    string query = @"INSERT INTO " + dbname + @".WORKROOMBOOKINGS VALUES(" + floorNum + @", " + roomNum + @", '" + username + @"', '" + date.ToString(@"yyyy-MM-dd HH:mm:ss") + "');";
+
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    result = com.ExecuteNonQuery();
+                }
+                catch(Exception a)
+                {
+                    Console.WriteLine("Issue occurred when saving a booking to the database.");
+                    Console.WriteLine(a.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+                
+                if (result > 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
             }
         }
     }

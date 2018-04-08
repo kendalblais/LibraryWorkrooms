@@ -325,12 +325,13 @@ namespace LibraryWorkroomSystem.Models.Database
                 new Column( "username", "VARCHAR(300)", new string[] { "NOT NULL" }, true)
             }),
 
+            //Had to edit this to make time of reservation a part of the key
             new Table ( dbname, "workroomBookings", new Column[]
             {
                 new Column( "floor_no", "INTEGER", new string[] { "NOT NULL" }, true),
                 new Column( "workroom_no", "INTEGER", new string[] { "NOT NULL" }, true),
                 new Column( "reserver_username", "VARCHAR(300)", null, false),
-                new Column( "time_of_reservation", "DATETIME", null, false)      //each reservation will be an hour length and only the start time is recorded          
+                new Column( "time_of_reservation", "DATETIME", null, true)      //each reservation will be an hour length and only the start time is recorded          
 
             })
 

@@ -3,6 +3,18 @@
     ViewBag.Title = "DisplayWorkroom";
 }
 
-<h2>DisplayWorkroom</h2>
-<h1>@ViewBag.time</h1>
+<h4>Floor: @ViewBag.floornum</h4>
+<h4>Workroom Number: @ViewBag.roomnum</h4>
+<h4>Start Time: @ViewBag.date1</h4>
+<h4>End Time: @ViewBag.date2</h4>
+@using (Html.BeginForm("BookWorkroom", "Workrooms"))
+{
+    <button type="submit" class="btn btn-default">Reserve this Workroom</button>
+    <input hidden name="floorNum" value="@ViewBag.floornum" />
+    <input hidden name="roomNum" value="@ViewBag.roomnum" />
+    <input hidden name="day" value="@ViewBag.day" />
+    <input hidden name="month" value="@ViewBag.month" />
+    <input hidden name="year" value="@ViewBag.year" />
+    <input hidden name="time" value="@ViewBag.time" />
+}
 

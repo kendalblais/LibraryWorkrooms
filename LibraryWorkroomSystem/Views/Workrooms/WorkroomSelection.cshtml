@@ -18,6 +18,7 @@
         <tr>
             <!--Assumption made that the library is only open until 4:00PM-->
             <th>Workroom Number</th>
+            <th>Workroom Capacity</th>
             <th>8:00 AM</th>
             <th>9:00 AM</th>
             <th>10:00 AM</th>
@@ -34,7 +35,8 @@
             foreach (LibraryWorkroomSystem.Models.DataTypes.Workroom room in LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getWorkrooms(ViewBag.floornum))
             {
                 <tr>
-                <td>@room.floor</td>
+                <td>@room.number</td>
+                <td>@room.size</td>
                 <!--Assumes library only open until 4:00 PM-->
                 @for (int i = 0; i <= 7; i++)
                 {

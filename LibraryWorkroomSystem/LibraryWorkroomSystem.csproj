@@ -231,6 +231,8 @@
     <Content Include="Views\Programs\ViewRegisteredPrograms.cshtml" />
     <Content Include="Views\Programs\AddProgram.cshtml" />
     <Content Include="Views\Programs\DisplayProgram.cshtml" />
+    <Content Include="Views\Workrooms\Success.cshtml" />
+    <Content Include="Views\Workrooms\Failure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

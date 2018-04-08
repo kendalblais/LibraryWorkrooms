@@ -12,11 +12,19 @@ namespace LibraryWorkroomSystem.Controllers
         // GET: Workrooms
         public ActionResult Index()
         {
+            if (!Sessions.isLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         public ActionResult WorkroomSelection(int floornum, int day, int month, int year)
         {
+            if (!Sessions.isLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.floornum = floornum;
             ViewBag.day = day;
             ViewBag.month = month;
@@ -26,8 +34,33 @@ namespace LibraryWorkroomSystem.Controllers
 
         public ActionResult DisplayWorkroom(int floorNum, int roomNum, int day, int month, int year, int time)
         {
+            if (!Sessions.isLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.floornum = floorNum;
+            ViewBag.roomnum = roomNum;
+            ViewBag.date1 = (new DateTime(year, month, day, time, 0, 0)).ToString();
+            ViewBag.date2 = (new DateTime(year, month, day, time + 1, 0, 0)).ToString();
+            ViewBag.day = day;
+            ViewBag.month = month;
+            ViewBag.year = year;
             ViewBag.time = time;
             return View();
+        }
+
+        public ActionResult BookWorkroom(int floorNum, int roomNum, int day, int month, int year, int time)
+        {
+            if (!Sessions.isLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (LibraryDatabase.getInstance().bookWorkroom(roomNum, floorNum, Sessions.getUser(), new DateTime(year, month, day, time, 0, 0)))
+            {
+                return View("Success");
+            }
+            else
+                return View("Failure");
         }
     }
 }

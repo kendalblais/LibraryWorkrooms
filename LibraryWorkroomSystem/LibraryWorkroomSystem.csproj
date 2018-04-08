@@ -219,6 +219,12 @@
     <Content Include="Views\Floors\Index.cshtml" />
     <Content Include="Views\Workrooms\WorkroomSelection.cshtml" />
     <Content Include="Views\Workrooms\DisplayWorkroom.cshtml" />
+    <Content Include="Views\Books\DisplayBook.cshtml" />
+    <Content Include="Views\Books\DisplaySeries.cshtml" />
+    <Content Include="Views\Programs\ViewAllPrograms.cshtml" />
+    <Content Include="Views\Programs\ViewRegisteredPrograms.cshtml" />
+    <Content Include="Views\Programs\AddProgram.cshtml" />
+    <Content Include="Views\Programs\DisplayProgram.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

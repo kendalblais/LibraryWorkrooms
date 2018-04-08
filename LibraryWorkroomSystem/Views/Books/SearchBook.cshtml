@@ -1,2 +1,19 @@
 ﻿
 <h2>search results</h2>
+
+@if (ViewBag.bookList != null)
+{
+    if (ViewBag.bookList.Length == 0)
+    {
+        <p>Your search did not retrun any results. Please try again.</p>
+    }
+    else
+    {
+        <p style="font-size:larger">Results:</p> <br />
+        foreach (string item in ViewBag.bookList)
+        {
+            @Html.ActionLink(item, "DisplayBook/" + item, "Books")
+            <br />
+        }
+    }
+}

@@ -6,6 +6,43 @@ using System.Web.Mvc;
 
 namespace LibraryWorkroomSystem.Models.Database
 {
+
+    public class Book
+    {
+        public String title { get; set; }
+
+        public String author { get; set; }
+
+        public String publish_date { get; set; }
+
+        public String series { get; set; }
+
+        public String renter { get; set; }
+
+        public DateTime take_out_date { get; set; }
+
+        public DateTime returnDate { get; set; } 
+
+        public int floorNumber { get; set; }
+    }
+
+    public class Program
+    {
+        public String name { get; set; }
+
+        public String description { get; set; }
+
+        public String date { get; set; }
+
+        public String startTime { get; set; }
+
+        public String endTime { get; set; }
+
+        public int teacherID { get; set; }
+
+        public bool inProgram { get; set; } = false;
+    }
+
     public class Account
     {
         public AccountType accType { get; set; }
@@ -23,7 +60,7 @@ namespace LibraryWorkroomSystem.Models.Database
         public List<Floor> list = new List<Floor>();
     }
 
-    public class FloorSelectModel {
+    public class MySelectModel {
         public IEnumerable<SelectListItem> list { get; set; }
     }
 

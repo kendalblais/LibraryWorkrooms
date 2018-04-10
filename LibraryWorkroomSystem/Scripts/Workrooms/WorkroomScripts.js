@@ -2,7 +2,7 @@
 //Note: This function isn't 100% correct according to the definition of a leap year.
 function validateDate()
 {
-    if (roomSize.value == 0) {
+    if (roomSize.value <= 0) {
         window.alert("Please enter a room size greater than zero.");
         return false;
     }

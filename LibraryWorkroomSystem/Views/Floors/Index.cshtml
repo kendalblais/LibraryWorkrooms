@@ -1,4 +1,6 @@
-﻿<h2>list floors and #workrooms</h2>
+﻿<script type="text/javascript" src="~/Scripts/Floors/floors.js"></script>
+
+<h2>list floors and #workrooms</h2>
 @model LibraryWorkroomSystem.Models.Database.Floors
 
 <table>
@@ -18,16 +20,32 @@
         </tr>
     }
 </table>
-<div class="container">
-
-    @using (Html.BeginForm("AddFloor", "Floors"))
-    {
-        <p>Floor Number:</p>
-        <input type="text" name="floorNumber"><br>
-        <button type="submit" class="btn btn-default">Add</button><br>
-
-    }
-   
-
-
+<div class="row">
+    <div class="col-md-5">
+        @using (Html.BeginForm("AddFloor", "Floors"))
+        {
+            <p>Floor Number:</p>
+            <input type="text" name="floorNumber"><br>
+            <button type="submit" class="btn btn-default">Add</button><br>
+        }
+    </div>
+    <div class="col-md-5">
+        <h2>Save a new workroom</h2>
+        @using (Html.BeginForm("SaveWorkroom", "Workrooms", FormMethod.Post, new { id = "saveRoom", onsubmit = "return validateRoom()" }))
+        {
+            <p>Floor Number:</p>
+            <select name="floorNo">
+                @for (int i = 1; i <= LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getNumberOfFloors(); i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+            <p>Workroom Number:</p>
+            <input name="roomNo" />
+            <p>Workroom Capacity:</p>
+            <input name="size" />
+            <br />
+            <button type="submit" class="btn btn-default">Submit Workroom</button>
+        }
+    </div>
 </div>

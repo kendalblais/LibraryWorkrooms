@@ -103,5 +103,13 @@ namespace LibraryWorkroomSystem.Controllers
                 return View("SearchBooked_Success");
             }
         }
+
+        public ActionResult SaveWorkroom(int roomNo, int floorNo, int size)
+        {
+            if (LibraryDatabase.getInstance().saveWorkroom(roomNo, floorNo, size))
+                return View("WorkroomCreation_Success");
+            else
+                return View("WorkroomCreation_Failure");
+        }
     }
 }

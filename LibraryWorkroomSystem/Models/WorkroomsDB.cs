@@ -52,6 +52,61 @@ namespace LibraryWorkroomSystem.Models.Database
         }
 
         /// <summary>
+        /// Saves a workroom to the database with the given parameters.
+        /// </summary>
+        /// <param name="number">Workroom number.</param>
+        /// <param name="floor">Floor number</param>
+        /// <param name="size">Size of the workroom.</param>
+        /// <returns>True if sucessful, false otherwise.</returns>
+        public bool saveWorkroom(int number, int floor, int size)
+        {
+            if (openConnection())
+            {
+                int toReturn = 0;
+
+                try
+                {
+                    //Insert workroom into workroom table
+                    string query = @"INSERT INTO " + dbname + @".WORKROOM VALUES('" + number + @"', '" + floor + @"', '" + size + @"');";
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    toReturn = com.ExecuteNonQuery();
+                    
+                    //Update number of workrooms value in floors table
+                    query = @"SELECT NUMBER_OF_WORKROOMS FROM " + dbname + @".FLOOR WHERE FLOOR_NO = '" + floor + @"';";
+                    MySqlCommand com2 = new MySqlCommand(query, connection);
+                    MySqlDataReader red = com2.ExecuteReader();
+                    //Should only be one value to read.
+                    red.Read();
+                    int temp = red.GetInt16("NUMBER_OF_WORKROOMS");
+                    red.Close();
+                    temp++;
+                    System.Diagnostics.Debug.WriteLine("dsfadsfadsfdsafadsff" + temp);
+                    query = @"UPDATE " + dbname + @".FLOOR SET NUMBER_OF_WORKROOMS = '" + temp + @"' WHERE FLOOR_NO = '" + floor + @"';";
+                    MySqlCommand com3 = new MySqlCommand(query, connection);
+                    com3.ExecuteNonQuery();
+                }
+                catch (Exception a)
+                {
+                    System.Diagnostics.Debug.WriteLine("Issue occurred when inserting new workroom to the database.");
+                    System.Diagnostics.Debug.WriteLine(a.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+
+                if (toReturn == 0)
+                    return false;
+                else
+                    return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// This function searches the database and returns information about reservations.
         /// </summary>
         /// <param name="floorNum">This number represents which floor to select from.</param>

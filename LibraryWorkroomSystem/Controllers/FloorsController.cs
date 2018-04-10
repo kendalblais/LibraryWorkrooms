@@ -13,11 +13,20 @@ namespace LibraryWorkroomSystem.Controllers
         // GET: Floors
         public ActionResult Index()
         {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Floors floors = LibraryDatabase.getInstance().getFloors();
             return View(floors);
         }
 
         public ActionResult AddFloor(string floorNumber) {
+            if (Sessions.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             string response = LibraryDatabase.getInstance().addFloor(Int32.Parse(floorNumber));
 

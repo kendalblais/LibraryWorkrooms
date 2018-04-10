@@ -1,18 +1,21 @@
 ﻿<script type="text/javascript" src="~/Scripts/Floors/floors.js"></script>
 
-<h2>list floors and #workrooms</h2>
+<h2>Floor List</h2>
 @model LibraryWorkroomSystem.Models.Database.Floors
 
 <table>
+    @if (Model.list.Count() == 0)
+    {
+        <th>no floors listed</th>
+    }
+    @if (Model.list.Count() != 0)
+    {
     <tr>
         <th>Floor Number</th>
         <th>Number of Workrooms</th>
     </tr>
-    @if(Model.list.Count() == 0)
-    {
-        <p>no floors listed</p>
     }
-    @foreach(LibraryWorkroomSystem.Models.Database.Floor floor in Model.list)
+    @foreach (LibraryWorkroomSystem.Models.Database.Floor floor in Model.list)
     {
         <tr>
             <th>@floor.floor_no</th>
@@ -24,7 +27,7 @@
     <div class="col-md-5">
         @using (Html.BeginForm("AddFloor", "Floors"))
         {
-            <p>Floor Number:</p>
+            <p>Add Floor Number:</p>
             <input type="text" name="floorNumber"><br>
             <button type="submit" class="btn btn-default">Add</button><br>
         }

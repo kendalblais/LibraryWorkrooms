@@ -226,6 +226,54 @@ namespace LibraryWorkroomSystem.Models.Database
         }
 
         /// <summary>
+        /// This function searches the database and returns a list of workrooms based on workroom capacity.
+        /// </summary>
+        /// <param name="roomsize">Size of the room to search for.</param>
+        /// <returns>A list of workrooms of the given size ±2</returns>
+        public List<Workroom> getWorkroomsRoomSize(int roomsize)
+        {
+            if (openConnection())
+            {
+                List<Workroom> toReturn = new List<Workroom>();
+
+                try
+                {
+                    string query = @"SELECT * FROM " + dbname + @".WORKROOM WHERE ROOM_SIZE BETWEEN '" + (roomsize-2) + @"' AND '" + (roomsize+2) + @"';";
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    MySqlDataReader red = com.ExecuteReader();
+
+                    //Read through database and get workroom information. Add that information to the list.
+                    while (red.Read())
+                    {
+                        Workroom tempRoom = new Workroom
+                        {
+                            floor = red.GetInt32("BELONGING_FLOOR"),
+                            number = red.GetInt32("WORKROOM_NO"),
+                            size = red.GetInt32("ROOM_SIZE")
+                        };
+
+                        toReturn.Add(tempRoom);
+                    }
+                }
+                catch (Exception a)
+                {
+                    Console.WriteLine("Issue occurred when retrieving workroom information from database. Could not retrieve workrooms based on workroom size.");
+                    Console.WriteLine(a.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+
+                return toReturn;
+            }
+            else
+            {
+                throw new Exception("Issue connecting to database. Could not retrieve workroom information.");
+            }
+        }
+
+        /// <summary>
         /// This function attempts to store a workroom booking in the database.
         /// </summary>
         /// <param name="roomNum">Room number of workroom.</param>
@@ -263,6 +311,94 @@ namespace LibraryWorkroomSystem.Models.Database
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Attempts to remove a reservation from the database.
+        /// </summary>
+        /// <param name="floorNum">Floor of which to delete booking.</param>
+        /// <param name="roomNum">Room number of which to delete booking.</param>
+        /// <param name="time">Time of which to delete booking. This number should be rounded to the nearest hour.</param>
+        /// <returns>true if deletion successful, false otherwise.</returns>
+        public bool removeBooking(int floorNum, int roomNum, DateTime time)
+        {
+            if (openConnection())
+            {
+                int result = 0;
+                try
+                {
+                    string query = @"DELETE FROM " + dbname + @".WORKROOMBOOKINGS WHERE WORKROOM_NO = '" + roomNum + @"' AND FLOOR_NO = '" + floorNum + @"' AND TIME_OF_RESERVATION = '" + time.ToString(@"yyyy-MM-dd HH:mm:ss") + "';";
+
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    result = com.ExecuteNonQuery();
+                }
+                catch (Exception a)
+                {
+                    Console.WriteLine("Issue occurred when saving a booking to the database.");
+                    Console.WriteLine(a.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+
+                if (result > 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Searches the database for a single variation based on the primary key.
+        /// </summary>
+        /// <param name="floorNum">Floor number of which to search for.</param>
+        /// <param name="roomNum">Room number of which to search for.</param>
+        /// <param name="date">Date of which to search for.</param>
+        /// <returns>A WorkroomReservation object if successful, null otherwise.</returns>
+        public WorkroomReservation getSingleReservation(int floorNum, int roomNum, DateTime date)
+        {
+            if (openConnection())
+            {
+                WorkroomReservation toReturn = null;
+
+                try
+                {
+                    string query = @"SELECT * FROM " + dbname + @".WORKROOMBOOKINGS WHERE FLOOR_NO = '" + floorNum + @"' AND WORKROOM_NO = '" + roomNum + @"' AND TIME_OF_RESERVATION = '" + date.ToString(@"yyyy-MM-dd HH:mm:ss") + @"';";
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    MySqlDataReader red = com.ExecuteReader();
+                    red.Read();
+                    toReturn = new WorkroomReservation
+                    {
+                        room = new Workroom
+                        {
+                            floor = red.GetInt32("FLOOR_NO"),
+                            number = red.GetInt32("WORKROOM_NO")
+                        },
+                        reserver = red.GetString("RESERVER_USERNAME"),
+                        timeOfReservation = red.GetDateTime("TIME_OF_RESERVATION")
+                    };
+                }
+                catch (Exception a)
+                {
+                    Console.WriteLine("Issue occurred when retrieving reservation information from database.");
+                    Console.WriteLine(a.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+
+                return toReturn;
+            }
+            else
+            {
+                throw new Exception("Issue connecting to database. Could not retrieve reservation information.");
             }
         }
     }

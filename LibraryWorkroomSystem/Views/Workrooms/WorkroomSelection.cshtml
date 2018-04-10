@@ -7,7 +7,7 @@
 }
 
 <body>
-    <h2>Floor @ViewBag.floornum.</h2>
+    <h2>Here's what we found for @ViewBag.roomsize person rooms on floor @ViewBag.floornum.</h2>
     @if (LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getWorkrooms(ViewBag.floornum).Count == 0)
     {
         <h3>There are no workrooms on this floor.</h3>
@@ -31,22 +31,40 @@
 
         @{
             List<LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation> reservations = LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getReservations(ViewBag.floornum, ViewBag.day, ViewBag.month, ViewBag.year);
-
-            foreach (LibraryWorkroomSystem.Models.DataTypes.Workroom room in LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getWorkrooms(ViewBag.floornum))
+            int count = 0;
+            foreach (LibraryWorkroomSystem.Models.DataTypes.Workroom roomie in LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getWorkrooms(ViewBag.floornum))
             {
+                if(LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getWorkroomsRoomSize(ViewBag.roomsize).Contains(roomie))
+                {
+                    count++;
                 <tr>
-                <td>@room.number</td>
-                <td>@room.size</td>
+                <td>@roomie.number</td>
+                <td>@roomie.size</td>
                 <!--Assumes library only open until 4:00 PM-->
                 @for (int i = 0; i <= 7; i++)
                 {
+                    LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation other = new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation();
+                    other.room = new LibraryWorkroomSystem.Models.DataTypes.Workroom();
+                    other.room.number = roomie.number;
                     switch (i)
                     {
                         case (0):
-                            if (reservations.Contains(new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation { timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 8, 0, 0) }))
+                            other.timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 8, 0, 0);
+                            if (reservations.Contains(other))
                             {
                                 <td>
-                                    <img src="~/Content/Images/booked.jpg" width="120" height="50"/>
+                                    @using (Html.BeginForm("DisplayBooked", "Workrooms"))
+                                    {
+                                    <button type="submit" class="btn btn-default">
+                                        <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                    </button>
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
+                                    <input hidden name="day" value="@ViewBag.day" />
+                                    <input hidden name="month" value="@ViewBag.month" />
+                                    <input hidden name="year" value="@ViewBag.year" />
+                                    <input hidden name="time" value="8" />
+                                    }
                                 </td>
                             }
                             else
@@ -57,8 +75,8 @@
                                     <button type="submit" class="btn btn-default">
                                         <img src="~/Content/Images/available.jpg" width="120" height="50" />
                                     </button>
-                                    <input hidden name="floorNum" value="@room.floor" />
-                                    <input hidden name="roomNum" value="@room.number" />
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
                                     <input hidden name="day" value="@ViewBag.day" />
                                     <input hidden name="month" value="@ViewBag.month" />
                                     <input hidden name="year" value="@ViewBag.year" />
@@ -69,10 +87,22 @@
                             break;
 
                         case (1):
-                            if (reservations.Contains(new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation { timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 9, 0, 0) }))
+                            other.timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 9, 0, 0);
+                            if (reservations.Contains(other))
                             {
                                 <td>
-                                    <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                     @using (Html.BeginForm("DisplayBooked", "Workrooms"))
+                                    {
+                                    <button type="submit" class="btn btn-default">
+                                        <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                    </button>
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
+                                    <input hidden name="day" value="@ViewBag.day" />
+                                    <input hidden name="month" value="@ViewBag.month" />
+                                    <input hidden name="year" value="@ViewBag.year" />
+                                    <input hidden name="time" value="9" />
+                                    }
                                 </td>
                             }
                             else
@@ -83,8 +113,8 @@
                                     <button type="submit" class="btn btn-default">
                                         <img src="~/Content/Images/available.jpg" width="120" height="50" />
                                     </button>
-                                    <input hidden name="floorNum" value="@room.floor" />
-                                    <input hidden name="roomNum" value="@room.number" />
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
                                     <input hidden name="day" value="@ViewBag.day" />
                                     <input hidden name="month" value="@ViewBag.month" />
                                     <input hidden name="year" value="@ViewBag.year" />
@@ -95,10 +125,22 @@
                             break;
 
                         case (2):
-                            if (reservations.Contains(new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation { timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 10, 0, 0) }))
+                            other.timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 10, 0, 0);
+                            if (reservations.Contains(other))
                             {
                                 <td>
-                                    <img src="~/Content/Images/booked.jpg" width="120" height="50"/>
+                                     @using (Html.BeginForm("DisplayBooked", "Workrooms"))
+                                    {
+                                    <button type="submit" class="btn btn-default">
+                                        <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                    </button>
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
+                                    <input hidden name="day" value="@ViewBag.day" />
+                                    <input hidden name="month" value="@ViewBag.month" />
+                                    <input hidden name="year" value="@ViewBag.year" />
+                                    <input hidden name="time" value="10" />
+                                    }
                                 </td>
                             }
                             else
@@ -109,8 +151,8 @@
                                     <button type="submit" class="btn btn-default">
                                         <img src="~/Content/Images/available.jpg" width="120" height="50" />
                                     </button>
-                                    <input hidden name="floorNum" value="@room.floor" />
-                                    <input hidden name="roomNum" value="@room.number" />
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
                                     <input hidden name="day" value="@ViewBag.day" />
                                     <input hidden name="month" value="@ViewBag.month" />
                                     <input hidden name="year" value="@ViewBag.year" />
@@ -121,10 +163,22 @@
                             break;
 
                         case (3):
-                            if (reservations.Contains(new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation { timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 11, 0, 0) }))
+                            other.timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 11, 0, 0);
+                            if (reservations.Contains(other))
                             {
                                 <td>
-                                    <img src="~/Content/Images/booked.jpg" width="120" height="50"/>
+                                     @using (Html.BeginForm("DisplayBooked", "Workrooms"))
+                                    {
+                                    <button type="submit" class="btn btn-default">
+                                        <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                    </button>
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
+                                    <input hidden name="day" value="@ViewBag.day" />
+                                    <input hidden name="month" value="@ViewBag.month" />
+                                    <input hidden name="year" value="@ViewBag.year" />
+                                    <input hidden name="time" value="11" />
+                                    }
                                 </td>
                             }
                             else
@@ -135,8 +189,8 @@
                                     <button type="submit" class="btn btn-default">
                                         <img src="~/Content/Images/available.jpg" width="120" height="50" />
                                     </button>
-                                    <input hidden name="floorNum" value="@room.floor" />
-                                    <input hidden name="roomNum" value="@room.number" />
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
                                     <input hidden name="day" value="@ViewBag.day" />
                                     <input hidden name="month" value="@ViewBag.month" />
                                     <input hidden name="year" value="@ViewBag.year" />
@@ -147,10 +201,22 @@
                             break;
 
                         case (4):
-                            if (reservations.Contains(new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation { timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 12, 0, 0) }))
+                            other.timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 12, 0, 0);
+                            if (reservations.Contains(other))
                             {
                                 <td>
-                                    <img src="~/Content/Images/booked.jpg" width="120" height="50"/>
+                                     @using (Html.BeginForm("DisplayBooked", "Workrooms"))
+                                    {
+                                    <button type="submit" class="btn btn-default">
+                                        <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                    </button>
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
+                                    <input hidden name="day" value="@ViewBag.day" />
+                                    <input hidden name="month" value="@ViewBag.month" />
+                                    <input hidden name="year" value="@ViewBag.year" />
+                                    <input hidden name="time" value="12" />
+                                    }
                                 </td>
                             }
                             else
@@ -161,8 +227,8 @@
                                     <button type="submit" class="btn btn-default">
                                         <img src="~/Content/Images/available.jpg" width="120" height="50" />
                                     </button>
-                                    <input hidden name="floorNum" value="@room.floor" />
-                                    <input hidden name="roomNum" value="@room.number" />
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
                                     <input hidden name="day" value="@ViewBag.day" />
                                     <input hidden name="month" value="@ViewBag.month" />
                                     <input hidden name="year" value="@ViewBag.year" />
@@ -173,10 +239,22 @@
                             break;
 
                         case (5):
-                            if (reservations.Contains(new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation { timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 13, 0, 0) }))
+                            other.timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 13, 0, 0);
+                            if (reservations.Contains(other))
                             {
                                 <td>
-                                    <img src="~/Content/Images/booked.jpg" width="120" height="50"/>
+                                     @using (Html.BeginForm("DisplayBooked", "Workrooms"))
+                                    {
+                                    <button type="submit" class="btn btn-default">
+                                        <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                    </button>
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
+                                    <input hidden name="day" value="@ViewBag.day" />
+                                    <input hidden name="month" value="@ViewBag.month" />
+                                    <input hidden name="year" value="@ViewBag.year" />
+                                    <input hidden name="time" value="13" />
+                                    }
                                 </td>
                             }
                             else
@@ -187,8 +265,8 @@
                                     <button type="submit" class="btn btn-default">
                                         <img src="~/Content/Images/available.jpg" width="120" height="50" />
                                     </button>
-                                    <input hidden name="floorNum" value="@room.floor" />
-                                    <input hidden name="roomNum" value="@room.number" />
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
                                     <input hidden name="day" value="@ViewBag.day" />
                                     <input hidden name="month" value="@ViewBag.month" />
                                     <input hidden name="year" value="@ViewBag.year" />
@@ -199,10 +277,22 @@
                             break;
 
                         case (6):
-                            if (reservations.Contains(new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation { timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 14, 0, 0) }))
+                            other.timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 14, 0, 0);
+                            if (reservations.Contains(other))
                             {
                                 <td>
-                                    <img src="~/Content/Images/booked.jpg" width="120" height="50"/>
+                                     @using (Html.BeginForm("DisplayBooked", "Workrooms"))
+                                    {
+                                    <button type="submit" class="btn btn-default">
+                                        <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                    </button>
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
+                                    <input hidden name="day" value="@ViewBag.day" />
+                                    <input hidden name="month" value="@ViewBag.month" />
+                                    <input hidden name="year" value="@ViewBag.year" />
+                                    <input hidden name="time" value="14" />
+                                    }
                                 </td>
                             }
                             else
@@ -213,8 +303,8 @@
                                     <button type="submit" class="btn btn-default">
                                         <img src="~/Content/Images/available.jpg" width="120" height="50" />
                                     </button>
-                                    <input hidden name="floorNum" value="@room.floor" />
-                                    <input hidden name="roomNum" value="@room.number" />
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
                                     <input hidden name="day" value="@ViewBag.day" />
                                     <input hidden name="month" value="@ViewBag.month" />
                                     <input hidden name="year" value="@ViewBag.year" />
@@ -225,10 +315,22 @@
                             break;
 
                         case (7):
-                            if (reservations.Contains(new LibraryWorkroomSystem.Models.DataTypes.WorkroomReservation { timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 15, 0, 0) }))
+                            other.timeOfReservation = new DateTime(ViewBag.year, ViewBag.month, ViewBag.day, 15, 0, 0);
+                            if (reservations.Contains(other))
                             {
                                 <td>
-                                    <img src="~/Content/Images/booked.jpg" width="120" height="50"/>
+                                     @using (Html.BeginForm("DisplayBooked", "Workrooms"))
+                                    {
+                                    <button type="submit" class="btn btn-default">
+                                        <img src="~/Content/Images/booked.jpg" width="120" height="50" />
+                                    </button>
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
+                                    <input hidden name="day" value="@ViewBag.day" />
+                                    <input hidden name="month" value="@ViewBag.month" />
+                                    <input hidden name="year" value="@ViewBag.year" />
+                                    <input hidden name="time" value="15" />
+                                    }
                                 </td>
                             }
                             else
@@ -239,8 +341,8 @@
                                     <button type="submit" class="btn btn-default">
                                         <img src="~/Content/Images/available.jpg" width="120" height="50" />
                                     </button>
-                                    <input hidden name="floorNum" value="@room.floor" />
-                                    <input hidden name="roomNum" value="@room.number" />
+                                    <input hidden name="floorNum" value="@roomie.floor" />
+                                    <input hidden name="roomNum" value="@roomie.number" />
                                     <input hidden name="day" value="@ViewBag.day" />
                                     <input hidden name="month" value="@ViewBag.month" />
                                     <input hidden name="year" value="@ViewBag.year" />
@@ -256,10 +358,15 @@
                     }
                 }
                 </tr>
+                }
             }
         }
 
     </table>
+    if(count == 0 && LibraryWorkroomSystem.Models.Database.LibraryDatabase.getInstance().getWorkrooms(ViewBag.floornum).Count > 0)
+    {
+        <h3>Could not find any workrooms of this size on this floor.</h3>
+    }
     }
 </body>
 </html>

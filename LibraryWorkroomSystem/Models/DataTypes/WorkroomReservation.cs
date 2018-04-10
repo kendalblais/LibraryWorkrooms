@@ -34,7 +34,9 @@ namespace LibraryWorkroomSystem.Models.DataTypes
         /// <returns>true if equal, false othewise.</returns>
         public bool Equals(WorkroomReservation other)
         {
-            return other.timeOfReservation.Hour == timeOfReservation.Hour;
+            bool toReturn = (other.timeOfReservation.Hour == timeOfReservation.Hour);
+            toReturn = toReturn && (other.room.number == room.number);
+            return toReturn;
         }
     }
 }

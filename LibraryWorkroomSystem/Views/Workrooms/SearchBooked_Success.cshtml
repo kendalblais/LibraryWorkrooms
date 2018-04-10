@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "SearchBooked_Success";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>This workroom is booked by @ViewBag.reserver on the date @ViewBag.time.</h4>
+        <h4>This reservation will last for one hour following the given date.</h4>
+    </div>
+    @if(LibraryWorkroomSystem.Models.Database.Sessions.getType() == "admin" || LibraryWorkroomSystem.Models.Database.Sessions.getType() == "employee")
+    { 
+        <div class="col-md-6">
+            <h4>Delete this booking?</h4>
+             @using (Html.BeginForm("RemoveBooking", "Workrooms"))
+             {
+                <button type="submit" class="btn btn-default">Remove</button>
+                <input hidden name="floorNum" value="@ViewBag.floornum" />
+                <input hidden name="roomNum" value="@ViewBag.roomnum" />
+                <input hidden name="day" value="@ViewBag.day" />
+                <input hidden name="month" value="@ViewBag.month" />
+                <input hidden name="year" value="@ViewBag.year" />
+                <input hidden name="time" value="@ViewBag.time2" />
+             }
+        </div>
+    }
+</div>
+
+

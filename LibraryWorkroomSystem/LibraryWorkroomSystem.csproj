@@ -233,6 +233,10 @@
     <Content Include="Views\Programs\DisplayProgram.cshtml" />
     <Content Include="Views\Workrooms\Success.cshtml" />
     <Content Include="Views\Workrooms\Failure.cshtml" />
+    <Content Include="Views\Workrooms\Deletion_Success.cshtml" />
+    <Content Include="Views\Workrooms\Deletion_Failure.cshtml" />
+    <Content Include="Views\Workrooms\SearchBooked_Failure.cshtml" />
+    <Content Include="Views\Workrooms\SearchBooked_Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

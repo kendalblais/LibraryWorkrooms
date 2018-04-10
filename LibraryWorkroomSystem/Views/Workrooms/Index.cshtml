@@ -23,11 +23,14 @@
             <br />
             @using (Html.BeginForm("WorkroomSelection", "Workrooms", FormMethod.Post, new { id = "workroomSearch", onsubmit = "return validateDate()" }))
             {
-            <h3>Please select a floor.</h3>
+            <h4>Please select a floor.</h4>
             <select id="floors" name="floornum">Floor</select>
             <script>populateFloors();</script>
             <br />
-            <h3>Please select a date. (DD--MM-YYYY)</h3>
+            <h4>Please enter a workroom size.</h4>
+            @Html.TextBox("roomSize", "", new { placeholder = "10" })
+            <br />
+            <h4>Please select a date. (DD-MM-YYYY)</h4>
             <select name="day">
                 @for (int i = 1; i <= 31; i++)
                 {
@@ -62,9 +65,19 @@
                     if (res.timeOfReservation.Subtract(DateTime.Now).TotalMilliseconds > 0)
                     {
                     <div style="border-top: thin solid gray; border-bottom: thin solid gray;" class="container">
-                        <p>Workroom Number: @res.room</p>
+                        <p>Workroom Number: @res.room.number</p>
+                        <p>Floor: @res.room.floor</p>
                         <p>Time of Booking: @res.timeOfReservation.ToString()</p>
-                        <button>Remove this Booking</button>
+                        @using (Html.BeginForm("RemoveBooking", "Workrooms"))
+                        {
+                            <button type="submit" class="btn btn-default">Remove this Booking</button>
+                            <input hidden name="floorNum" value="@res.room.floor" />
+                            <input hidden name="roomNum" value="@res.room.number" />
+                            <input hidden name="day" value="@res.timeOfReservation.Day" />
+                            <input hidden name="month" value="@res.timeOfReservation.Month" />
+                            <input hidden name="year" value="@res.timeOfReservation.Year" />
+                            <input hidden name="time" value="@res.timeOfReservation.Hour" />
+                        }
                     </div>
                         count++;
                     }

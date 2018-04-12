@@ -148,7 +148,7 @@ namespace LibraryWorkroomSystem.Models.Database
 
                         program.name = dataReader.GetString("name");
                         program.description = dataReader.GetString("description");
-                        program.date = dataReader.GetString("date");
+                        program.date = dataReader.GetString("date").Substring(0,10);
                         program.startTime = dataReader.GetString("start_time");
                         program.endTime = dataReader.GetString("end_time");
                         program.teacherID = dataReader.GetInt32("teacher_ID");

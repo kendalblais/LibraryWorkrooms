@@ -9,7 +9,11 @@ namespace LibraryWorkroomSystem.Models.Database
 {
     public partial class LibraryDatabase
     {
-
+        /// <summary>
+        /// Updates the availability of the selected book to 'available'
+        /// </summary>
+        /// <param name="title"> book to change availability </param>
+        /// <param name="author"> author of book to change availability </param>
         public void updateBookAvailability(string title, string author)
         {
             string query = @"UPDATE " + dbname + @".book SET renter_username = NULL, take_out_date = NULL, return_date = NULL " +
@@ -29,6 +33,11 @@ namespace LibraryWorkroomSystem.Models.Database
             }
         }
 
+        /// <summary>
+        /// Removes the selected book from the database
+        /// </summary>
+        /// <param name="title"> title of book to be removed </param>
+        /// <param name="author">author of book to be removed </param>
         public void deleteBook(string title, string author)
         {
             string query = @"DELETE FROM " + dbname + @".book WHERE title='" + title +
@@ -49,6 +58,13 @@ namespace LibraryWorkroomSystem.Models.Database
             }
         }
 
+        /// <summary>
+        /// Reserves a book for the currently logged in user.
+        /// </summary>
+        /// <param name="title"> title of book to reserve </param>
+        /// <param name="author"> author of book to reserve </param>
+        /// <param name="takeout"> time of takeout </param>
+        /// <param name="returndate"> book's due date </param>
         public void takeOutBook(string title, string author, DateTime takeout, DateTime returndate)
         {
             
@@ -83,6 +99,12 @@ namespace LibraryWorkroomSystem.Models.Database
             
         }
 
+        /// <summary>
+        /// Retrieves a list of all the books in the database
+        /// </summary>
+        /// <param name="request"> the search query </param>
+        /// <param name="type"> the type of search: regular, series or rented </param>
+        /// <returns></returns>
         public string[] searchBooks(string request, string type)
         {
             string[] books = null;
@@ -138,6 +160,12 @@ namespace LibraryWorkroomSystem.Models.Database
             return books;
         }
 
+        /// <summary>
+        /// Retrieves all the information about the specified book. 
+        /// </summary>
+        /// <param name="title"> Title of the specified book </param>
+        /// <param name="author"> Author of the specified book </param>
+        /// <returns></returns>
         public Book getBook(string title, string author)
         {
 
@@ -195,6 +223,14 @@ namespace LibraryWorkroomSystem.Models.Database
             return book;
         }
 
+        /// <summary>
+        /// Adds a book to the BOOK table
+        /// </summary>
+        /// <param name="title"> title of the book </param>
+        /// <param name="author"> author of the book </param>
+        /// <param name="publish_date"> date it was published </param>
+        /// <param name="series"> series it belongs to (if any) </param>
+        /// <param name="floor_no">floor the book is stored on</param>
         public void addBook(string title, string author, string publish_date, string series, int floor_no) {
 
 
@@ -230,6 +266,6 @@ namespace LibraryWorkroomSystem.Models.Database
             }
         }
 
-        //Book methods for the database here
+        
     }
 }

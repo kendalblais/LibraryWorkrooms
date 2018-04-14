@@ -6,7 +6,9 @@ using System.Web.Mvc;
 
 namespace LibraryWorkroomSystem.Models.Database
 {
-
+    /// <summary>
+    /// Model to access a Book from the html view
+    /// </summary>
     public class Book
     {
         public String title { get; set; }
@@ -26,6 +28,9 @@ namespace LibraryWorkroomSystem.Models.Database
         public int floorNumber { get; set; }
     }
 
+    /// <summary>
+    /// Model to access a Program from the html view
+    /// </summary>
     public class Program
     {
         public String name { get; set; }
@@ -43,6 +48,9 @@ namespace LibraryWorkroomSystem.Models.Database
         public bool inProgram { get; set; } = false;
     }
 
+    /// <summary>
+    /// Model to access the Account info of a logged in user from the html view
+    /// </summary>
     public class Account
     {
         public AccountType accType { get; set; }
@@ -55,15 +63,24 @@ namespace LibraryWorkroomSystem.Models.Database
 
     }
 
+    /// <summary>
+    /// List of Floors
+    /// </summary>
     public class Floors
     {
         public List<Floor> list = new List<Floor>();
     }
 
+    /// <summary>
+    /// Generic model for drop down lists
+    /// </summary>
     public class MySelectModel {
         public IEnumerable<SelectListItem> list { get; set; }
     }
 
+    /// <summary>
+    /// Definition of Floor to be accessed in the html view
+    /// </summary>
     public class Floor {
 
         public int floor_no { get; set; }

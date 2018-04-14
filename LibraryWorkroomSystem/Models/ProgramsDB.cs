@@ -10,8 +10,11 @@ namespace LibraryWorkroomSystem.Models.Database
     public partial class LibraryDatabase
     {
 
-        //program methods for the database here
-
+      
+        /// <summary>
+        /// Retrieves all employees from the system
+        /// </summary>
+        /// <returns></returns>
         public List<string> getEmployees()
         {
             string query = @"SELECT * FROM " + dbname + @".employee WHERE position = 'employee';";
@@ -52,6 +55,15 @@ namespace LibraryWorkroomSystem.Models.Database
             return list;
         }
 
+        /// <summary>
+        /// Adds a program to the system with the required information
+        /// </summary>
+        /// <param name="name"> name of program </param>
+        /// <param name="description"> description of the program </param>
+        /// <param name="date"> date the program takes place </param>
+        /// <param name="startTime"> start time </param>
+        /// <param name="endTime"> end time </param>
+        /// <param name="teacherID"> the employee id of the teacher teaching the program </param>
         public void addProgram(string name, string description, string date, string startTime, string endTime, string teacherID)
         {
             string query = @"INSERT INTO " + dbname + ".program (name,description,date,start_time,end_time,teacher_ID) " +
@@ -86,6 +98,10 @@ namespace LibraryWorkroomSystem.Models.Database
             }
         }
 
+        /// <summary>
+        /// retrieves a list of the names of all programs in the system
+        /// </summary>
+        /// <returns></returns>
         public string[] getPrograms()
         {
             string query = @"SELECT * FROM " + dbname + @".program;";
@@ -127,6 +143,11 @@ namespace LibraryWorkroomSystem.Models.Database
             return programs;
         }
 
+        /// <summary>
+        /// Retrieves all the information about the desired program
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns> instance of Program that contains all information for that program </returns>
         public Program getProgram(string name)
         {
 
@@ -184,6 +205,11 @@ namespace LibraryWorkroomSystem.Models.Database
             return program;
         }
 
+        /// <summary>
+        /// Checks whether the currently logged in user is in the desired program yet 
+        /// </summary>
+        /// <param name="progName"></param>
+        /// <returns> true or false </returns>
         public bool isInProgram(string progName)
         {
             string query = @"SELECT * FROM " + dbname + @".users_in_programs WHERE program_name='" +
@@ -221,6 +247,10 @@ namespace LibraryWorkroomSystem.Models.Database
 
         }
 
+        /// <summary>
+        /// registers the currently logged in user to the desired program
+        /// </summary>
+        /// <param name="programName"></param>
         public void registerForProgram(String programName)
         {
             string query = "INSERT INTO " + dbname + ".users_in_programs (program_name,username) " +
@@ -236,6 +266,10 @@ namespace LibraryWorkroomSystem.Models.Database
             }
         }
 
+        /// <summary>
+        /// removes a program from the system
+        /// </summary>
+        /// <param name="progName"></param>
         public void deleteProgram(string progName)
         {
             string query = "DELETE FROM " + dbname + ".program WHERE name = '" +
@@ -251,6 +285,10 @@ namespace LibraryWorkroomSystem.Models.Database
             }
         }
 
+        /// <summary>
+        /// Retrieves a list of the names of all programs the currently logged in user is registered for
+        /// </summary>
+        /// <returns></returns>
         public string[] retrieveRegisteredPrograms()
         {
             string query = @"SELECT * FROM " + dbname + @".users_in_programs WHERE username = '" +
@@ -294,6 +332,10 @@ namespace LibraryWorkroomSystem.Models.Database
 
         }
 
+        /// <summary>
+        /// Cancels the the currently logged in user's registration for the desired program 
+        /// </summary>
+        /// <param name="progName"> program to be cancelled </param>
         public void cancelRegistration(string progName)
         {
             string query = "DELETE FROM " + dbname + ".users_in_programs WHERE program_name = '" +

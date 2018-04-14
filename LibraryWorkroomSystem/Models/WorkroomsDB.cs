@@ -8,7 +8,7 @@ using System.Web;
 
 namespace LibraryWorkroomSystem.Models.Database
 {
-    //TODO: Add functionality to this class.
+    
 
     /// <summary>
     /// This part of the class contains useful methods for processing workrooms information.

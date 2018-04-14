@@ -8,7 +8,11 @@ namespace LibraryWorkroomSystem.Models.Database
 {
     public partial class LibraryDatabase
     {
-
+        /// <summary>
+        /// Adds a floor to the library system
+        /// </summary>
+        /// <param name="floor_no"> floor number to be added to the system</param>
+        /// <returns> response message about status </returns>
         public string addFloor(int floor_no) {
             string response = "";
 
@@ -45,6 +49,10 @@ namespace LibraryWorkroomSystem.Models.Database
             return response;
         }
 
+        /// <summary>
+        /// Retrieves all Floors in the system 
+        /// </summary>
+        /// <returns> Floors which contains a list of each Floor </returns>
         public Floors getFloors()
         {
 

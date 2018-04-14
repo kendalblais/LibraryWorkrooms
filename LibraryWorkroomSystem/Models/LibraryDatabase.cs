@@ -23,7 +23,10 @@ namespace LibraryWorkroomSystem.Models.Database
             return instance;
         }
 
-
+        /// <summary>
+        /// changes the premium status of the currently logged in user to value passed in
+        /// </summary>
+        /// <param name="premium"></param>
         public void changePremium(bool premium) {
 
             string query = @"UPDATE " + dbname + @".user SET premium_or_not = " + premium + @" WHERE username='" + Sessions.getUser() + @"';";
@@ -36,6 +39,10 @@ namespace LibraryWorkroomSystem.Models.Database
         }
 
    
+        /// <summary>
+        /// retrieves all account data from the database for the currently logged in user
+        /// </summary>
+        /// <returns></returns>
         public Account getAccountData()
         {
             Account acct = new Account();
@@ -78,6 +85,11 @@ namespace LibraryWorkroomSystem.Models.Database
             return acct;
         }
 
+        /// <summary>
+        /// retrieves the account type of the required username from the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public AccountType getAccountType(string username) {
             string query = @"SELECT * FROM " + dbname + @".employee " +
                 @"WHERE emp_username='" + username + @"';";
@@ -126,6 +138,12 @@ namespace LibraryWorkroomSystem.Models.Database
 
         }
 
+        /// <summary>
+        /// adds an employee to the system with the specified account type. Either admin or regular employee
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public string addEmployee(string username, AccountType position) {
 
             
@@ -172,6 +190,12 @@ namespace LibraryWorkroomSystem.Models.Database
             return response;
         }
 
+        /// <summary>
+        /// attempts to log the user into the system.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns> false if unsuccessful </returns>
         public bool attemptLogin(string username, string password)
         {
             string query = @"SELECT * FROM " + dbname + @".user " +
@@ -208,6 +232,13 @@ namespace LibraryWorkroomSystem.Models.Database
 
         }
 
+        /// <summary>
+        /// Creates a new account in the system
+        /// </summary>
+        /// <param name="username"> users username </param>
+        /// <param name="password"> users password </param>
+        /// <param name="name"> users name </param>
+        /// <returns></returns>
         public bool createNewAccount(string username, string password, string name)
         {
             string query = @"INSERT INTO " + dbname + ".user (username,name,password) " +

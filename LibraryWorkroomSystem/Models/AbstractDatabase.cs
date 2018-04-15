@@ -11,6 +11,13 @@ namespace LibraryWorkroomSystem.Models.Database
     /// This class is used as a base class for the creation and deletion of a database.
     /// To use this class you will need to implement the databaseName and tables properties.
     /// It is recommended that the inhereting class be a singleton.
+    /// 
+    /// 
+    /// IMPORTANT NOTE: The skeleton of this class is based off of code we've used in SENG 401.
+    ///                 The skeleton of both column.cs and table.cs are also based off of code used in SENG 401.
+    ///                 We've received permission to use this code from Joshua Walters (TA of SENG 401)
+    ///                 joshua.walters@ucalgary.ca
+    /// 
     /// </summary>
     public abstract partial class AbstractDatabase
     {

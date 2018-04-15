@@ -8,6 +8,11 @@ namespace LibraryWorkroomSystem.Models.Database
 {
     /// <summary>
     /// This class represents a column in a table in a MySql database
+    /// 
+    /// IMPORTANT NOTE: The skeleton of this class is based off of code we've used in SENG 401.
+    ///                 The skeleton of both abstractdatabase.cs and table.cs are also based off of code used in SENG 401.
+    ///                 We've received permission to use this code from Joshua Walters (TA of SENG 401)
+    ///                 joshua.walters@ucalgary.ca
     /// </summary>
     public partial class Column
     {
